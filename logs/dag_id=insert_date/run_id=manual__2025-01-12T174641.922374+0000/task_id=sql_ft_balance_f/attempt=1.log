@@ -1,0 +1,66 @@
+[2025-01-12T17:46:54.636+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_ft_balance_f manual__2025-01-12T17:46:41.922374+00:00 [queued]>
+[2025-01-12T17:46:54.652+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_ft_balance_f manual__2025-01-12T17:46:41.922374+00:00 [queued]>
+[2025-01-12T17:46:54.653+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T17:46:54.838+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_ft_balance_f> on 2025-01-12 17:46:41.922374+00:00
+[2025-01-12T17:46:54.845+0000] {standard_task_runner.py:60} INFO - Started process 5681 to run task
+[2025-01-12T17:46:54.849+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_ft_balance_f', 'manual__2025-01-12T17:46:41.922374+00:00', '--job-id', '2615', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmptqv9u86f']
+[2025-01-12T17:46:54.853+0000] {standard_task_runner.py:88} INFO - Job 2615: Subtask sql_ft_balance_f
+[2025-01-12T17:46:54.915+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_ft_balance_f manual__2025-01-12T17:46:41.922374+00:00 [running]> on host 711845a6becd
+[2025-01-12T17:46:55.011+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_ft_balance_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T17:46:41.922374+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T17:46:41.922374+00:00'
+[2025-01-12T17:46:55.012+0000] {sql.py:276} INFO - Executing: INSERT INTO ds.ft_balance_f(
+      account_rk
+    , currency_rk
+    , balance_out
+    , on_date
+)
+SELECT fbf."ACCOUNT_RK" 
+     , fbf."CURRENCY_RK" 
+     , fbf."BALANCE_OUT" 
+     , to_date(fbf."ON_DATE" , 'dd.mm.YYYY') AS on_date
+FROM stage.ft_balance_f fbf
+WHERE fbf."ACCOUNT_RK"  IS NOT NULL
+  AND fbf."CURRENCY_RK"  IS NOT NULL
+ON conflict On Constraint ft_balance_f_pkey DO Update
+
+  set currency_rk=excluded.currency_rk
+	  ,balance_out=excluded.balance_out;
+
+[2025-01-12T17:46:55.028+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:46:55.047+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:46:55.117+0000] {sql.py:450} INFO - Running statement: INSERT INTO ds.ft_balance_f(
+      account_rk
+    , currency_rk
+    , balance_out
+    , on_date
+)
+SELECT fbf."ACCOUNT_RK" 
+     , fbf."CURRENCY_RK" 
+     , fbf."BALANCE_OUT" 
+     , to_date(fbf."ON_DATE" , 'dd.mm.YYYY') AS on_date
+FROM stage.ft_balance_f fbf
+WHERE fbf."ACCOUNT_RK"  IS NOT NULL
+  AND fbf."CURRENCY_RK"  IS NOT NULL
+ON conflict On Constraint ft_balance_f_pkey DO Update
+
+  set currency_rk=excluded.currency_rk
+	  ,balance_out=excluded.balance_out;
+, parameters: None
+[2025-01-12T17:46:55.131+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.CardinalityViolation: ОШИБКА:  команда ON CONFLICT DO UPDATE не может подействовать на строку дважды
+HINT:  Проверьте, не содержат ли строки, которые должна добавить команда, дублирующиеся значения, подпадающие под ограничения.
+
+[2025-01-12T17:46:55.143+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=sql_ft_balance_f, execution_date=20250112T174641, start_date=20250112T174654, end_date=20250112T174655
+[2025-01-12T17:46:55.171+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 2615 for task sql_ft_balance_f (ОШИБКА:  команда ON CONFLICT DO UPDATE не может подействовать на строку дважды
+HINT:  Проверьте, не содержат ли строки, которые должна добавить команда, дублирующиеся значения, подпадающие под ограничения.
+; 5681)
+[2025-01-12T17:46:55.222+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-12T17:46:55.286+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

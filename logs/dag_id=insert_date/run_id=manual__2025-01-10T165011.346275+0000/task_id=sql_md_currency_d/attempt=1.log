@@ -1,0 +1,74 @@
+[2025-01-10T16:50:22.834+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_md_currency_d manual__2025-01-10T16:50:11.346275+00:00 [queued]>
+[2025-01-10T16:50:22.857+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_md_currency_d manual__2025-01-10T16:50:11.346275+00:00 [queued]>
+[2025-01-10T16:50:22.858+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-10T16:50:23.070+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_md_currency_d> on 2025-01-10 16:50:11.346275+00:00
+[2025-01-10T16:50:23.078+0000] {standard_task_runner.py:60} INFO - Started process 173 to run task
+[2025-01-10T16:50:23.081+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_md_currency_d', 'manual__2025-01-10T16:50:11.346275+00:00', '--job-id', '1973', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp5kh1djud']
+[2025-01-10T16:50:23.084+0000] {standard_task_runner.py:88} INFO - Job 1973: Subtask sql_md_currency_d
+[2025-01-10T16:50:23.151+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_md_currency_d manual__2025-01-10T16:50:11.346275+00:00 [running]> on host 711845a6becd
+[2025-01-10T16:50:23.263+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_md_currency_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-10T16:50:11.346275+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-10T16:50:11.346275+00:00'
+[2025-01-10T16:50:23.266+0000] {sql.py:276} INFO - Executing:  INSERT INTO ds.md_currency_d(
+      currency_rk
+    , data_actual_date
+    , data_actual_end_date
+    , currency_code
+    , code_iso_char
+)
+SELECT distinct
+    mcd."CURRENCY_RK"
+    , to_date(mcd."DATA_ACTUAL_DATE", '%Y-%m-%d') as data_actual_date
+    , to_date(mcd."DATA_ACTUAL_END_DATE", '%Y-%m-%d') as data_actual_end_date
+    , mcd."CURRENCY_CODE" 
+	, mcd."CODE_ISO_CHAR" 
+FROM stage.md_currency_d mcd
+WHERE mcd."CURRENCY_RK" IS NOT NULL
+   AND mcd."DATA_ACTUAL_DATE" IS NOT NULL
+On conflict on constraint md_currency_d_pkey do update
+	set data_actual_end_date=excluded.data_actual_end_date
+		,currency_code=excluded.currency_code
+		,code_iso_char=excluded.code_iso_char; 
+[2025-01-10T16:50:23.278+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T16:50:23.289+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T16:50:23.367+0000] {sql.py:450} INFO - Running statement:  INSERT INTO ds.md_currency_d(
+      currency_rk
+    , data_actual_date
+    , data_actual_end_date
+    , currency_code
+    , code_iso_char
+)
+SELECT distinct
+    mcd."CURRENCY_RK"
+    , to_date(mcd."DATA_ACTUAL_DATE", '%Y-%m-%d') as data_actual_date
+    , to_date(mcd."DATA_ACTUAL_END_DATE", '%Y-%m-%d') as data_actual_end_date
+    , mcd."CURRENCY_CODE" 
+	, mcd."CODE_ISO_CHAR" 
+FROM stage.md_currency_d mcd
+WHERE mcd."CURRENCY_RK" IS NOT NULL
+   AND mcd."DATA_ACTUAL_DATE" IS NOT NULL
+On conflict on constraint md_currency_d_pkey do update
+	set data_actual_end_date=excluded.data_actual_end_date
+		,currency_code=excluded.currency_code
+		,code_iso_char=excluded.code_iso_char; , parameters: None
+[2025-01-10T16:50:23.380+0000] {sql.py:459} INFO - Rows affected: 50
+[2025-01-10T16:50:23.395+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=sql_md_currency_d, execution_date=20250110T165011, start_date=20250110T165022, end_date=20250110T165023
+[2025-01-10T16:50:23.399+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T16:50:23.474+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-10T16:50:11.346275', '2025-01-10T16:50:23.396340', 'sql_md_currency_d');
+    , parameters: None
+[2025-01-10T16:50:23.481+0000] {taskinstance.py:1116} ERROR - Error when executing uploading_logs callback
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 1113, in _run_finished_callback
+    callback(context)
+  File "/opt/airflow/dags/insert_data.py", line 53, in uploading_logs
+    postgres_hook.run(query)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[2025-01-10T16:50:23.536+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-10T16:50:23.596+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,221 @@
+[2025-01-12T13:25:15.912+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.create_schema_ds manual__2025-01-12T13:25:13.438938+00:00 [queued]>
+[2025-01-12T13:25:15.924+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.create_schema_ds manual__2025-01-12T13:25:13.438938+00:00 [queued]>
+[2025-01-12T13:25:15.925+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T13:25:16.074+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): create_schema_ds> on 2025-01-12 13:25:13.438938+00:00
+[2025-01-12T13:25:16.080+0000] {standard_task_runner.py:60} INFO - Started process 1143 to run task
+[2025-01-12T13:25:16.084+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'create_schema_ds', 'manual__2025-01-12T13:25:13.438938+00:00', '--job-id', '2095', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp88jxn5sb']
+[2025-01-12T13:25:16.086+0000] {standard_task_runner.py:88} INFO - Job 2095: Subtask create_schema_ds
+[2025-01-12T13:25:16.129+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.create_schema_ds manual__2025-01-12T13:25:13.438938+00:00 [running]> on host 711845a6becd
+[2025-01-12T13:25:16.198+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='create_schema_ds' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T13:25:13.438938+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T13:25:13.438938+00:00'
+[2025-01-12T13:25:16.200+0000] {sql.py:276} INFO - Executing: -- создаём схему
+create schema if not exists ds;
+
+-- создаём таблицы
+-- остатки средств на счетах
+create table if not exists
+	ds.ft_balance_f (
+		on_date date not null,
+		account_rk integer not null,
+		currency_rk integer,
+		balance_out decimal,
+		PRIMARY KEY(on_date, account_rk)
+);
+
+
+-- Проводки (движения средств) по счетам
+CREATE TABLE IF NOT EXISTS ds.ft_posting_f (
+    oper_date DATE NOT NULL,
+    credit_account_rk INTEGER NOT NULL,
+    debet_account_rk INTEGER NOT NULL,
+    credit_amount DECIMAL,
+    debet_amount DECIMAL
+);
+
+
+
+-- информация о счетах клиентов
+create table if not exists
+	ds.md_account_d (
+		data_actual_date date not null,
+		data_actual_end_date date not null,
+		account_rk integer not null,
+		account_number varchar(20) not null,
+		char_type varchar(1) not null,
+		currency_rk integer not null,
+		currency_code varchar(3) not null,
+		PRIMARY KEY(data_actual_date, account_rk)
+);
+
+-- справочник валют
+create table if not exists
+	ds.md_currency_d (
+		currency_rk integer not null,
+		data_actual_date date not null,
+		data_actual_end_date date,
+		currency_code varchar(25),
+		code_iso_char varchar(3),
+		PRIMARY KEY(currency_rk, data_actual_date)
+);
+
+-- курсы валют
+create table if not exists
+	ds.md_exchange_rate_d (
+		data_actual_date date not null,
+		data_actual_end_date date,
+		currency_rk integer not null,
+		reduced_cource decimal,
+		code_iso_num varchar(3),
+		PRIMARY KEY(data_actual_date, currency_rk)
+);
+
+-- справочник балансовых счётов
+create table if not exists
+	ds.md_ledger_account_s (
+		chapter char(1),
+		chapter_name varchar(16),
+		section_number integer,
+		section_name varchar(22),
+		subsection_name varchar(21),
+		ledger1_account integer,
+		ledger1_account_name varchar(47),
+		ledger_account integer not null,
+		ledger_account_name varchar(153),
+		characteristic char(1),
+		is_resident integer,
+		is_reserve integer,
+		is_reserved integer,
+		is_loan integer,
+		is_reserved_assets integer,
+		is_overdue integer,
+		is_interest integer,
+		pair_account varchar(5),
+		start_date date not null,
+		end_date date,
+		is_rub_only integer,
+		min_term varchar(1),
+		min_term_measure varchar(1),
+		max_term varchar(1),
+		max_term_measure varchar(1),
+		ledger_acc_full_name_translit varchar(1),
+		is_revaluation varchar(1),
+		is_correct varchar(1),
+		PRIMARY KEY(ledger_account, start_date)
+);
+[2025-01-12T13:25:16.208+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T13:25:16.215+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T13:25:16.260+0000] {sql.py:450} INFO - Running statement: -- создаём схему
+create schema if not exists ds;
+
+-- создаём таблицы
+-- остатки средств на счетах
+create table if not exists
+	ds.ft_balance_f (
+		on_date date not null,
+		account_rk integer not null,
+		currency_rk integer,
+		balance_out decimal,
+		PRIMARY KEY(on_date, account_rk)
+);
+
+
+-- Проводки (движения средств) по счетам
+CREATE TABLE IF NOT EXISTS ds.ft_posting_f (
+    oper_date DATE NOT NULL,
+    credit_account_rk INTEGER NOT NULL,
+    debet_account_rk INTEGER NOT NULL,
+    credit_amount DECIMAL,
+    debet_amount DECIMAL
+);
+
+
+
+-- информация о счетах клиентов
+create table if not exists
+	ds.md_account_d (
+		data_actual_date date not null,
+		data_actual_end_date date not null,
+		account_rk integer not null,
+		account_number varchar(20) not null,
+		char_type varchar(1) not null,
+		currency_rk integer not null,
+		currency_code varchar(3) not null,
+		PRIMARY KEY(data_actual_date, account_rk)
+);
+
+-- справочник валют
+create table if not exists
+	ds.md_currency_d (
+		currency_rk integer not null,
+		data_actual_date date not null,
+		data_actual_end_date date,
+		currency_code varchar(25),
+		code_iso_char varchar(3),
+		PRIMARY KEY(currency_rk, data_actual_date)
+);
+
+-- курсы валют
+create table if not exists
+	ds.md_exchange_rate_d (
+		data_actual_date date not null,
+		data_actual_end_date date,
+		currency_rk integer not null,
+		reduced_cource decimal,
+		code_iso_num varchar(3),
+		PRIMARY KEY(data_actual_date, currency_rk)
+);
+
+-- справочник балансовых счётов
+create table if not exists
+	ds.md_ledger_account_s (
+		chapter char(1),
+		chapter_name varchar(16),
+		section_number integer,
+		section_name varchar(22),
+		subsection_name varchar(21),
+		ledger1_account integer,
+		ledger1_account_name varchar(47),
+		ledger_account integer not null,
+		ledger_account_name varchar(153),
+		characteristic char(1),
+		is_resident integer,
+		is_reserve integer,
+		is_reserved integer,
+		is_loan integer,
+		is_reserved_assets integer,
+		is_overdue integer,
+		is_interest integer,
+		pair_account varchar(5),
+		start_date date not null,
+		end_date date,
+		is_rub_only integer,
+		min_term varchar(1),
+		min_term_measure varchar(1),
+		max_term varchar(1),
+		max_term_measure varchar(1),
+		ledger_acc_full_name_translit varchar(1),
+		is_revaluation varchar(1),
+		is_correct varchar(1),
+		PRIMARY KEY(ledger_account, start_date)
+);, parameters: None
+[2025-01-12T13:25:16.274+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=create_schema_ds, execution_date=20250112T132513, start_date=20250112T132515, end_date=20250112T132516
+[2025-01-12T13:25:16.281+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T13:25:16.433+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-12T13:25:13.438938', '2025-01-12T13:25:16.275806', 'create_schema_ds');
+    , parameters: None
+[2025-01-12T13:25:16.438+0000] {taskinstance.py:1116} ERROR - Error when executing uploading_logs callback
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 1113, in _run_finished_callback
+    callback(context)
+  File "/opt/airflow/dags/insert_data.py", line 53, in uploading_logs
+    postgres_hook.run(query)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[2025-01-12T13:25:16.497+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-12T13:25:16.524+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

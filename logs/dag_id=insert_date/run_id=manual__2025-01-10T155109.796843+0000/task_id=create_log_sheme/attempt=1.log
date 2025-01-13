@@ -1,0 +1,51 @@
+[2025-01-10T15:51:14.717+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.create_log_sheme manual__2025-01-10T15:51:09.796843+00:00 [queued]>
+[2025-01-10T15:51:14.737+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.create_log_sheme manual__2025-01-10T15:51:09.796843+00:00 [queued]>
+[2025-01-10T15:51:14.738+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-10T15:51:14.927+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): create_log_sheme> on 2025-01-10 15:51:09.796843+00:00
+[2025-01-10T15:51:14.935+0000] {standard_task_runner.py:60} INFO - Started process 2577 to run task
+[2025-01-10T15:51:14.938+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'create_log_sheme', 'manual__2025-01-10T15:51:09.796843+00:00', '--job-id', '1805', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp7tb8xevv']
+[2025-01-10T15:51:14.943+0000] {standard_task_runner.py:88} INFO - Job 1805: Subtask create_log_sheme
+[2025-01-10T15:51:15.013+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.create_log_sheme manual__2025-01-10T15:51:09.796843+00:00 [running]> on host 711845a6becd
+[2025-01-10T15:51:15.124+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='create_log_sheme' AIRFLOW_CTX_EXECUTION_DATE='2025-01-10T15:51:09.796843+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-10T15:51:09.796843+00:00'
+[2025-01-10T15:51:15.126+0000] {sql.py:276} INFO - Executing: create schema if not exists "log";
+
+create table if not exists
+	log.csv_to_dag (
+		execution_datetime TIMESTAMP not null,
+		event_datetime TIMESTAMP not null,
+		event_name VARCHAR(30) not null,
+		event_status VARCHAR(30)
+);
+[2025-01-10T15:51:15.138+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T15:51:15.149+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T15:51:15.242+0000] {sql.py:450} INFO - Running statement: create schema if not exists "log";
+
+create table if not exists
+	log.csv_to_dag (
+		execution_datetime TIMESTAMP not null,
+		event_datetime TIMESTAMP not null,
+		event_name VARCHAR(30) not null,
+		event_status VARCHAR(30)
+);, parameters: None
+[2025-01-10T15:51:15.265+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=create_log_sheme, execution_date=20250110T155109, start_date=20250110T155114, end_date=20250110T155115
+[2025-01-10T15:51:15.271+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T15:51:15.348+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-10T15:51:09.796843', '2025-01-10T15:51:15.266677', 'create_log_sheme');
+    , parameters: None
+[2025-01-10T15:51:15.355+0000] {taskinstance.py:1116} ERROR - Error when executing uploading_logs callback
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 1113, in _run_finished_callback
+    callback(context)
+  File "/opt/airflow/dags/insert_data.py", line 53, in uploading_logs
+    postgres_hook.run(query)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[2025-01-10T15:51:15.393+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-10T15:51:15.438+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

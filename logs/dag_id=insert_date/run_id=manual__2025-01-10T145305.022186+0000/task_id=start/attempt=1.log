@@ -1,0 +1,31 @@
+[2025-01-10T14:53:05.891+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.start manual__2025-01-10T14:53:05.022186+00:00 [queued]>
+[2025-01-10T14:53:05.897+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.start manual__2025-01-10T14:53:05.022186+00:00 [queued]>
+[2025-01-10T14:53:05.898+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-10T14:53:05.997+0000] {taskinstance.py:2191} INFO - Executing <Task(EmptyOperator): start> on 2025-01-10 14:53:05.022186+00:00
+[2025-01-10T14:53:06.001+0000] {standard_task_runner.py:60} INFO - Started process 898 to run task
+[2025-01-10T14:53:06.003+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'start', 'manual__2025-01-10T14:53:05.022186+00:00', '--job-id', '1516', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp4f54ozyu']
+[2025-01-10T14:53:06.005+0000] {standard_task_runner.py:88} INFO - Job 1516: Subtask start
+[2025-01-10T14:53:06.038+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.start manual__2025-01-10T14:53:05.022186+00:00 [running]> on host 711845a6becd
+[2025-01-10T14:53:06.088+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='start' AIRFLOW_CTX_EXECUTION_DATE='2025-01-10T14:53:05.022186+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-10T14:53:05.022186+00:00'
+[2025-01-10T14:53:06.095+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=start, execution_date=20250110T145305, start_date=20250110T145305, end_date=20250110T145306
+[2025-01-10T14:53:06.099+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T14:53:06.132+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-10T14:53:05.022186', '2025-01-10T14:53:06.096226', 'start');
+    , parameters: None
+[2025-01-10T14:53:06.135+0000] {taskinstance.py:1116} ERROR - Error when executing uploading_logs callback
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 1113, in _run_finished_callback
+    callback(context)
+  File "/opt/airflow/dags/insert_data.py", line 51, in uploading_logs
+    postgres_hook.run(query)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[2025-01-10T14:53:06.176+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-10T14:53:06.199+0000] {taskinstance.py:3280} INFO - 8 downstream tasks scheduled from follow-on schedule check

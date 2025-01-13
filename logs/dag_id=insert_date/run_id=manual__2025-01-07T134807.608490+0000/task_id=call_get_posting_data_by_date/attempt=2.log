@@ -1,0 +1,36 @@
+[2025-01-07T13:53:10.973+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-07T13:48:07.608490+00:00 [queued]>
+[2025-01-07T13:53:10.981+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-07T13:48:07.608490+00:00 [queued]>
+[2025-01-07T13:53:10.981+0000] {taskinstance.py:2170} INFO - Starting attempt 2 of 3
+[2025-01-07T13:53:11.097+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): call_get_posting_data_by_date> on 2025-01-07 13:48:07.608490+00:00
+[2025-01-07T13:53:11.103+0000] {standard_task_runner.py:60} INFO - Started process 378 to run task
+[2025-01-07T13:53:11.106+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'call_get_posting_data_by_date', 'manual__2025-01-07T13:48:07.608490+00:00', '--job-id', '1090', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpc0tcokwu']
+[2025-01-07T13:53:11.108+0000] {standard_task_runner.py:88} INFO - Job 1090: Subtask call_get_posting_data_by_date
+[2025-01-07T13:53:11.149+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-07T13:48:07.608490+00:00 [running]> on host 25a397655cc7
+[2025-01-07T13:53:11.213+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='call_get_posting_data_by_date' AIRFLOW_CTX_EXECUTION_DATE='2025-01-07T13:48:07.608490+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-07T13:48:07.608490+00:00'
+[2025-01-07T13:53:11.215+0000] {sql.py:276} INFO - Executing: CALL dm.get_posting_data_by_date()
+[2025-01-07T13:53:11.221+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T13:53:11.227+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T13:53:11.264+0000] {sql.py:450} INFO - Running statement: CALL dm.get_posting_data_by_date(), parameters: None
+[2025-01-07T13:53:11.267+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedFunction: ОШИБКА:  процедура dm.get_posting_data_by_date() не существует
+LINE 1: CALL dm.get_posting_data_by_date()
+             ^
+HINT:  Процедура с данными именем и типами аргументов не найдена. Возможно, вам следует добавить явные приведения типов.
+
+[2025-01-07T13:53:11.276+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=call_get_posting_data_by_date, execution_date=20250107T134807, start_date=20250107T135310, end_date=20250107T135311
+[2025-01-07T13:53:11.284+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 1090 for task call_get_posting_data_by_date (ОШИБКА:  процедура dm.get_posting_data_by_date() не существует
+LINE 1: CALL dm.get_posting_data_by_date()
+             ^
+HINT:  Процедура с данными именем и типами аргументов не найдена. Возможно, вам следует добавить явные приведения типов.
+; 378)
+[2025-01-07T13:53:11.319+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-07T13:53:11.334+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

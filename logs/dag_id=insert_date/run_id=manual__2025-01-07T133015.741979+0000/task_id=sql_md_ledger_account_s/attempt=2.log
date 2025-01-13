@@ -1,0 +1,92 @@
+[2025-01-07T13:35:19.129+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_md_ledger_account_s manual__2025-01-07T13:30:15.741979+00:00 [queued]>
+[2025-01-07T13:35:19.148+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_md_ledger_account_s manual__2025-01-07T13:30:15.741979+00:00 [queued]>
+[2025-01-07T13:35:19.148+0000] {taskinstance.py:2170} INFO - Starting attempt 2 of 3
+[2025-01-07T13:35:19.352+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_md_ledger_account_s> on 2025-01-07 13:30:15.741979+00:00
+[2025-01-07T13:35:19.360+0000] {standard_task_runner.py:60} INFO - Started process 1164 to run task
+[2025-01-07T13:35:19.364+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_md_ledger_account_s', 'manual__2025-01-07T13:30:15.741979+00:00', '--job-id', '1034', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpwov2sra5']
+[2025-01-07T13:35:19.368+0000] {standard_task_runner.py:88} INFO - Job 1034: Subtask sql_md_ledger_account_s
+[2025-01-07T13:35:19.431+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_md_ledger_account_s manual__2025-01-07T13:30:15.741979+00:00 [running]> on host 25a397655cc7
+[2025-01-07T13:35:19.534+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_md_ledger_account_s' AIRFLOW_CTX_EXECUTION_DATE='2025-01-07T13:30:15.741979+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-07T13:30:15.741979+00:00'
+[2025-01-07T13:35:19.536+0000] {sql.py:276} INFO - Executing: INSERT INTO dsl.md_ledger_account_s( 
+    chapter
+    ,chapter_name
+	,section_number
+	,section_name
+	,subsection_name
+	,ledger1_account
+	,ledger1_account_name
+	,ledger_account 
+	,ledger_account_name 
+	,characteristic
+	,start_date
+	,end_date
+)
+SELECT
+	mlas."CHAPTER"
+	, mlas."CHAPTER_NAME"
+	, mlas."SECTION_NUMBER"
+	, mlas."SECTION_NAME"
+	, mlas."SUBSECTION_NAME"
+	, mlas."LEDGER1_ACCOUNT"
+	, mlas."LEDGER1_ACCOUNT_NAME"
+	, mlas."LEDGER_ACCOUNT"
+	, mlas."LEDGER_ACCOUNT_NAME"
+	, mlas."CHARACTERISTIC"
+	, to_date(mlas."START_DATE", '%Y-%m-%d')
+	, to_date(mlas."END_DATE", '%Y-%m-%d')
+  FROM stage.md_ledger_account_s mlas
+ WHERE mlas."LEDGER_ACCOUNT" IS NOT NULL
+   AND mlas."START_DATE" IS NOT NULL; 
+[2025-01-07T13:35:19.546+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T13:35:19.557+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T13:35:19.628+0000] {sql.py:450} INFO - Running statement: INSERT INTO dsl.md_ledger_account_s( 
+    chapter
+    ,chapter_name
+	,section_number
+	,section_name
+	,subsection_name
+	,ledger1_account
+	,ledger1_account_name
+	,ledger_account 
+	,ledger_account_name 
+	,characteristic
+	,start_date
+	,end_date
+)
+SELECT
+	mlas."CHAPTER"
+	, mlas."CHAPTER_NAME"
+	, mlas."SECTION_NUMBER"
+	, mlas."SECTION_NAME"
+	, mlas."SUBSECTION_NAME"
+	, mlas."LEDGER1_ACCOUNT"
+	, mlas."LEDGER1_ACCOUNT_NAME"
+	, mlas."LEDGER_ACCOUNT"
+	, mlas."LEDGER_ACCOUNT_NAME"
+	, mlas."CHARACTERISTIC"
+	, to_date(mlas."START_DATE", '%Y-%m-%d')
+	, to_date(mlas."END_DATE", '%Y-%m-%d')
+  FROM stage.md_ledger_account_s mlas
+ WHERE mlas."LEDGER_ACCOUNT" IS NOT NULL
+   AND mlas."START_DATE" IS NOT NULL; , parameters: None
+[2025-01-07T13:35:19.634+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "stage.md_ledger_account_s" не существует
+LINE 28:   FROM stage.md_ledger_account_s mlas
+                ^
+
+[2025-01-07T13:35:19.645+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=sql_md_ledger_account_s, execution_date=20250107T133015, start_date=20250107T133519, end_date=20250107T133519
+[2025-01-07T13:35:19.658+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 1034 for task sql_md_ledger_account_s (ОШИБКА:  отношение "stage.md_ledger_account_s" не существует
+LINE 28:   FROM stage.md_ledger_account_s mlas
+                ^
+; 1164)
+[2025-01-07T13:35:19.697+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-07T13:35:19.713+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

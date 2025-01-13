@@ -1,0 +1,24 @@
+[2025-01-12T15:07:33.568+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T15:07:30.162638+00:00 [queued]>
+[2025-01-12T15:07:33.576+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T15:07:30.162638+00:00 [queued]>
+[2025-01-12T15:07:33.577+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T15:07:33.686+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): start_log> on 2025-01-12 15:07:30.162638+00:00
+[2025-01-12T15:07:33.691+0000] {standard_task_runner.py:60} INFO - Started process 3276 to run task
+[2025-01-12T15:07:33.694+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'start_log', 'manual__2025-01-12T15:07:30.162638+00:00', '--job-id', '2317', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpttk11zmv']
+[2025-01-12T15:07:33.696+0000] {standard_task_runner.py:88} INFO - Job 2317: Subtask start_log
+[2025-01-12T15:07:33.730+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.start_log manual__2025-01-12T15:07:30.162638+00:00 [running]> on host 711845a6becd
+[2025-01-12T15:07:33.787+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='start_log' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T15:07:30.162638+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T15:07:30.162638+00:00'
+[2025-01-12T15:07:33.932+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/insert_data.py", line 69, in start_log
+    time.sleep(5)
+AttributeError: 'builtin_function_or_method' object has no attribute 'sleep'
+[2025-01-12T15:07:33.940+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=start_log, execution_date=20250112T150730, start_date=20250112T150733, end_date=20250112T150733
+[2025-01-12T15:07:33.949+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 2317 for task start_log ('builtin_function_or_method' object has no attribute 'sleep'; 3276)
+[2025-01-12T15:07:33.987+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-12T15:07:34.008+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,1 @@
+[2025-01-07T13:48:09.944+0000] {scheduler_job_runner.py:781} ERROR - Executor reports task instance <TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-07T13:48:07.608490+00:00 [queued]> finished (success) although the task says it's queued. (Info: None) Was the task killed externally?

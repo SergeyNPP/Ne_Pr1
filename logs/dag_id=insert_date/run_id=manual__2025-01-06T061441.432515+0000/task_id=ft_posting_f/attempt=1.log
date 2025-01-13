@@ -1,0 +1,83 @@
+[2025-01-06T06:14:42.954+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.ft_posting_f manual__2025-01-06T06:14:41.432515+00:00 [queued]>
+[2025-01-06T06:14:42.961+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.ft_posting_f manual__2025-01-06T06:14:41.432515+00:00 [queued]>
+[2025-01-06T06:14:42.962+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-06T06:14:42.972+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): ft_posting_f> on 2025-01-06 06:14:41.432515+00:00
+[2025-01-06T06:14:42.977+0000] {standard_task_runner.py:60} INFO - Started process 687 to run task
+[2025-01-06T06:14:42.979+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'ft_posting_f', 'manual__2025-01-06T06:14:41.432515+00:00', '--job-id', '97', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpxbfb127a']
+[2025-01-06T06:14:42.982+0000] {standard_task_runner.py:88} INFO - Job 97: Subtask ft_posting_f
+[2025-01-06T06:14:43.158+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.ft_posting_f manual__2025-01-06T06:14:41.432515+00:00 [running]> on host 25a397655cc7
+[2025-01-06T06:14:43.226+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='ft_posting_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-06T06:14:41.432515+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-06T06:14:41.432515+00:00'
+[2025-01-06T06:14:43.251+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-06T06:14:43.544+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+psycopg2.errors.UndefinedColumn: ОШИБКА:  столбец "OPER_DATE" в таблице "ft_posting_f" не существует
+LINE 1: INSERT INTO stage.ft_posting_f ("OPER_DATE", "CREDIT_ACCOUNT...
+                                        ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/insert_data.py", line 14, in insert_data
+    df.to_sql(table_name, engine, schema="stage", if_exists="append", index=False)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 2878, in to_sql
+    return sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 769, in to_sql
+    return pandas_sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1920, in to_sql
+    total_inserted = sql_engine.insert_records(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1470, in insert_records
+    raise err
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1461, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1023, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 929, in _execute_insert
+    result = conn.execute(self.table.insert(), data)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) ОШИБКА:  столбец "OPER_DATE" в таблице "ft_posting_f" не существует
+LINE 1: INSERT INTO stage.ft_posting_f ("OPER_DATE", "CREDIT_ACCOUNT...
+                                        ^
+
+[SQL: INSERT INTO stage.ft_posting_f ("OPER_DATE", "CREDIT_ACCOUNT_RK", "DEBET_ACCOUNT_RK", "CREDIT_AMOUNT", "DEBET_AMOUNT") VALUES (%(OPER_DATE)s, %(CREDIT_ACCOUNT_RK)s, %(DEBET_ACCOUNT_RK)s, %(CREDIT_AMOUNT)s, %(DEBET_AMOUNT)s)]
+[parameters: ({'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 13630, 'DEBET_ACCOUNT_RK': 17436, 'CREDIT_AMOUNT': 94333.93, 'DEBET_AMOUNT': 18337.76}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 15698716, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 68294.14, 'DEBET_AMOUNT': 31542.06}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 12048338, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 2192.96, 'DEBET_AMOUNT': 98734.33}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 393808409, 'DEBET_ACCOUNT_RK': 17244, 'CREDIT_AMOUNT': 44179.86, 'DEBET_AMOUNT': 98544.65}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 409685020, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 18843.05, 'DEBET_AMOUNT': 889.74}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 10006159, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 82792.29, 'DEBET_AMOUNT': 15395.98}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 393808409, 'DEBET_ACCOUNT_RK': 17132, 'CREDIT_AMOUNT': 9587.62, 'DEBET_AMOUNT': 40751.1}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 23463, 'DEBET_ACCOUNT_RK': 13631, 'CREDIT_AMOUNT': 36873.02, 'DEBET_AMOUNT': 78441.61}  ... displaying 10 of 33892 total bound parameter sets ...  {'OPER_DATE': '31-01-2018', 'CREDIT_ACCOUNT_RK': 13630, 'DEBET_ACCOUNT_RK': 17627064, 'CREDIT_AMOUNT': 70839.11, 'DEBET_AMOUNT': 93751.76}, {'OPER_DATE': '31-01-2018', 'CREDIT_ACCOUNT_RK': 13630, 'DEBET_ACCOUNT_RK': 1648686, 'CREDIT_AMOUNT': 34785.31, 'DEBET_AMOUNT': 40997.1})]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-01-06T06:14:43.557+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=ft_posting_f, execution_date=20250106T061441, start_date=20250106T061442, end_date=20250106T061443
+[2025-01-06T06:14:43.564+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 97 for task ft_posting_f ((psycopg2.errors.UndefinedColumn) ОШИБКА:  столбец "OPER_DATE" в таблице "ft_posting_f" не существует
+LINE 1: INSERT INTO stage.ft_posting_f ("OPER_DATE", "CREDIT_ACCOUNT...
+                                        ^
+
+[SQL: INSERT INTO stage.ft_posting_f ("OPER_DATE", "CREDIT_ACCOUNT_RK", "DEBET_ACCOUNT_RK", "CREDIT_AMOUNT", "DEBET_AMOUNT") VALUES (%(OPER_DATE)s, %(CREDIT_ACCOUNT_RK)s, %(DEBET_ACCOUNT_RK)s, %(CREDIT_AMOUNT)s, %(DEBET_AMOUNT)s)]
+[parameters: ({'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 13630, 'DEBET_ACCOUNT_RK': 17436, 'CREDIT_AMOUNT': 94333.93, 'DEBET_AMOUNT': 18337.76}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 15698716, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 68294.14, 'DEBET_AMOUNT': 31542.06}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 12048338, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 2192.96, 'DEBET_AMOUNT': 98734.33}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 393808409, 'DEBET_ACCOUNT_RK': 17244, 'CREDIT_AMOUNT': 44179.86, 'DEBET_AMOUNT': 98544.65}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 409685020, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 18843.05, 'DEBET_AMOUNT': 889.74}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 10006159, 'DEBET_ACCOUNT_RK': 13630, 'CREDIT_AMOUNT': 82792.29, 'DEBET_AMOUNT': 15395.98}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 393808409, 'DEBET_ACCOUNT_RK': 17132, 'CREDIT_AMOUNT': 9587.62, 'DEBET_AMOUNT': 40751.1}, {'OPER_DATE': '09-01-2018', 'CREDIT_ACCOUNT_RK': 23463, 'DEBET_ACCOUNT_RK': 13631, 'CREDIT_AMOUNT': 36873.02, 'DEBET_AMOUNT': 78441.61}  ... displaying 10 of 33892 total bound parameter sets ...  {'OPER_DATE': '31-01-2018', 'CREDIT_ACCOUNT_RK': 13630, 'DEBET_ACCOUNT_RK': 17627064, 'CREDIT_AMOUNT': 70839.11, 'DEBET_AMOUNT': 93751.76}, {'OPER_DATE': '31-01-2018', 'CREDIT_ACCOUNT_RK': 13630, 'DEBET_ACCOUNT_RK': 1648686, 'CREDIT_AMOUNT': 34785.31, 'DEBET_AMOUNT': 40997.1})]
+(Background on this error at: https://sqlalche.me/e/14/f405); 687)
+[2025-01-06T06:14:43.594+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-06T06:14:43.708+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

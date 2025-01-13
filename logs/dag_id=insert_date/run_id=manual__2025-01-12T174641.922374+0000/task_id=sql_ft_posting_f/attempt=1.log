@@ -1,0 +1,55 @@
+[2025-01-12T17:46:54.600+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_ft_posting_f manual__2025-01-12T17:46:41.922374+00:00 [queued]>
+[2025-01-12T17:46:54.615+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_ft_posting_f manual__2025-01-12T17:46:41.922374+00:00 [queued]>
+[2025-01-12T17:46:54.616+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T17:46:54.816+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_ft_posting_f> on 2025-01-12 17:46:41.922374+00:00
+[2025-01-12T17:46:54.822+0000] {standard_task_runner.py:60} INFO - Started process 5679 to run task
+[2025-01-12T17:46:54.826+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_ft_posting_f', 'manual__2025-01-12T17:46:41.922374+00:00', '--job-id', '2613', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp9ew86bo2']
+[2025-01-12T17:46:54.829+0000] {standard_task_runner.py:88} INFO - Job 2613: Subtask sql_ft_posting_f
+[2025-01-12T17:46:54.888+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_ft_posting_f manual__2025-01-12T17:46:41.922374+00:00 [running]> on host 711845a6becd
+[2025-01-12T17:46:54.987+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_ft_posting_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T17:46:41.922374+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T17:46:41.922374+00:00'
+[2025-01-12T17:46:54.988+0000] {sql.py:276} INFO - Executing: truncate table ds.ft_posting_f;
+
+INSERT INTO ds.ft_posting_f(
+      credit_account_rk
+    , debet_account_rk
+    , credit_amount
+    , debet_amount
+    , oper_date
+)
+SELECT fpf."CREDIT_ACCOUNT_RK"
+    , fpf."DEBET_ACCOUNT_RK" 
+    , fpf."CREDIT_AMOUNT" 
+    , fpf."DEBET_AMOUNT" 
+    , to_date(fpf."OPER_DATE", 'dd.mm.YYYY') as oper_date
+FROM stage.ft_posting_f fpf
+ WHERE fpf."CREDIT_ACCOUNT_RK" IS NOT NULL
+AND fpf."DEBET_ACCOUNT_RK" IS NOT NULL; 
+[2025-01-12T17:46:55.000+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:46:55.010+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:46:55.083+0000] {sql.py:450} INFO - Running statement: truncate table ds.ft_posting_f;
+
+INSERT INTO ds.ft_posting_f(
+      credit_account_rk
+    , debet_account_rk
+    , credit_amount
+    , debet_amount
+    , oper_date
+)
+SELECT fpf."CREDIT_ACCOUNT_RK"
+    , fpf."DEBET_ACCOUNT_RK" 
+    , fpf."CREDIT_AMOUNT" 
+    , fpf."DEBET_AMOUNT" 
+    , to_date(fpf."OPER_DATE", 'dd.mm.YYYY') as oper_date
+FROM stage.ft_posting_f fpf
+ WHERE fpf."CREDIT_ACCOUNT_RK" IS NOT NULL
+AND fpf."DEBET_ACCOUNT_RK" IS NOT NULL; , parameters: None
+[2025-01-12T17:46:56.060+0000] {sql.py:459} INFO - Rows affected: 237244
+[2025-01-12T17:46:56.080+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=sql_ft_posting_f, execution_date=20250112T174641, start_date=20250112T174654, end_date=20250112T174656
+[2025-01-12T17:46:56.084+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:46:56.129+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-12 17:46:41.922374', '2025-01-12T17:46:56.081330', 'sql_ft_posting_f');
+    , parameters: None
+[2025-01-12T17:46:56.132+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-12T17:46:56.163+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-12T17:46:56.185+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

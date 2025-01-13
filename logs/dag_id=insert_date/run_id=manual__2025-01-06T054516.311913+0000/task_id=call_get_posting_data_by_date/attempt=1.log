@@ -1,0 +1,72 @@
+[2025-01-07T09:33:00.971+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-06T05:45:16.311913+00:00 [queued]>
+[2025-01-07T09:33:00.997+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-06T05:45:16.311913+00:00 [queued]>
+[2025-01-07T09:33:00.999+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-07T09:33:01.453+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): call_get_posting_data_by_date> on 2025-01-06 05:45:16.311913+00:00
+[2025-01-07T09:33:01.471+0000] {standard_task_runner.py:60} INFO - Started process 540 to run task
+[2025-01-07T09:33:01.479+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'call_get_posting_data_by_date', 'manual__2025-01-06T05:45:16.311913+00:00', '--job-id', '527', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmptkcze07p']
+[2025-01-07T09:33:01.486+0000] {standard_task_runner.py:88} INFO - Job 527: Subtask call_get_posting_data_by_date
+[2025-01-07T09:33:01.607+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.call_get_posting_data_by_date manual__2025-01-06T05:45:16.311913+00:00 [running]> on host 25a397655cc7
+[2025-01-07T09:33:01.803+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='call_get_posting_data_by_date' AIRFLOW_CTX_EXECUTION_DATE='2025-01-06T05:45:16.311913+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-06T05:45:16.311913+00:00'
+[2025-01-07T09:33:01.808+0000] {sql.py:276} INFO - Executing: CALL dm.get_posting_data_by_date()
+[2025-01-07T09:33:01.829+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T09:33:01.846+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T09:33:01.982+0000] {sql.py:450} INFO - Running statement: CALL dm.get_posting_data_by_date(), parameters: None
+[2025-01-07T09:33:01.992+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "dm.posting_data_by_date" не существует
+LINE 5:     INSERT INTO dm.posting_data_by_date(
+                        ^
+QUERY:  
+    
+    TRUNCATE TABLE dm.posting_data_by_date;
+
+    INSERT INTO dm.posting_data_by_date(
+          operation_date
+        , debit_amount
+        , credit_amount
+        , row_timestamp
+    )
+    SELECT fpf.oper_date 
+         , SUM(fpf.credit_amount)   AS credit_amount
+         , SUM(fpf.debet_amount)    AS debet_amount 
+         , NOW()                    AS row_timestamp
+      FROM dsl.ft_posting_f fpf
+     GROUP BY fpf.oper_date;
+
+
+CONTEXT:  SQL-функция "get_posting_data_by_date" (при старте)
+
+[2025-01-07T09:33:02.010+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=call_get_posting_data_by_date, execution_date=20250106T054516, start_date=20250107T093300, end_date=20250107T093302
+[2025-01-07T09:33:02.048+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 527 for task call_get_posting_data_by_date (ОШИБКА:  отношение "dm.posting_data_by_date" не существует
+LINE 5:     INSERT INTO dm.posting_data_by_date(
+                        ^
+QUERY:  
+    
+    TRUNCATE TABLE dm.posting_data_by_date;
+
+    INSERT INTO dm.posting_data_by_date(
+          operation_date
+        , debit_amount
+        , credit_amount
+        , row_timestamp
+    )
+    SELECT fpf.oper_date 
+         , SUM(fpf.credit_amount)   AS credit_amount
+         , SUM(fpf.debet_amount)    AS debet_amount 
+         , NOW()                    AS row_timestamp
+      FROM dsl.ft_posting_f fpf
+     GROUP BY fpf.oper_date;
+
+
+CONTEXT:  SQL-функция "get_posting_data_by_date" (при старте)
+; 540)
+[2025-01-07T09:33:02.097+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-07T09:33:02.155+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

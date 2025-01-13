@@ -1,0 +1,60 @@
+[2025-01-10T14:17:20.971+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_ft_balance_f scheduled__2025-01-09T00:00:00+00:00 [queued]>
+[2025-01-10T14:17:20.987+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_ft_balance_f scheduled__2025-01-09T00:00:00+00:00 [queued]>
+[2025-01-10T14:17:20.988+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-10T14:17:21.178+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_ft_balance_f> on 2025-01-09 00:00:00+00:00
+[2025-01-10T14:17:21.186+0000] {standard_task_runner.py:60} INFO - Started process 113 to run task
+[2025-01-10T14:17:21.190+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_ft_balance_f', 'scheduled__2025-01-09T00:00:00+00:00', '--job-id', '1418', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpgkjnaj5o']
+[2025-01-10T14:17:21.194+0000] {standard_task_runner.py:88} INFO - Job 1418: Subtask sql_ft_balance_f
+[2025-01-10T14:17:21.279+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_ft_balance_f scheduled__2025-01-09T00:00:00+00:00 [running]> on host 711845a6becd
+[2025-01-10T14:17:21.381+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_ft_balance_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-09T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-09T00:00:00+00:00'
+[2025-01-10T14:17:21.383+0000] {sql.py:276} INFO - Executing: INSERT INTO dsl.ft_balance_f(
+      account_rk
+    , currency_rk
+    , balance_out
+    , on_date
+)
+SELECT fbf."ACCOUNT_RK" 
+     , fbf."CURRENCY_RK" 
+     , fbf."BALANCE_OUT" 
+     , to_date(fbf."ON_DATE" , 'dd.mm.YYYY') AS on_date
+  FROM stage.ft_balance_f fbf
+ WHERE fbf."ACCOUNT_RK"  IS NOT NULL
+   AND fbf."CURRENCY_RK"  IS NOT NULL; 
+[2025-01-10T14:17:21.394+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T14:17:21.406+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T14:17:21.474+0000] {sql.py:450} INFO - Running statement: INSERT INTO dsl.ft_balance_f(
+      account_rk
+    , currency_rk
+    , balance_out
+    , on_date
+)
+SELECT fbf."ACCOUNT_RK" 
+     , fbf."CURRENCY_RK" 
+     , fbf."BALANCE_OUT" 
+     , to_date(fbf."ON_DATE" , 'dd.mm.YYYY') AS on_date
+  FROM stage.ft_balance_f fbf
+ WHERE fbf."ACCOUNT_RK"  IS NOT NULL
+   AND fbf."CURRENCY_RK"  IS NOT NULL; , parameters: None
+[2025-01-10T14:17:21.482+0000] {sql.py:459} INFO - Rows affected: 228
+[2025-01-10T14:17:21.495+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=sql_ft_balance_f, execution_date=20250109T000000, start_date=20250110T141720, end_date=20250110T141721
+[2025-01-10T14:17:21.500+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-10T14:17:21.576+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-09T00:00:00', '2025-01-10T14:17:21.496453', 'sql_ft_balance_f');
+    , parameters: None
+[2025-01-10T14:17:21.581+0000] {taskinstance.py:1116} ERROR - Error when executing uploading_logs callback
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 1113, in _run_finished_callback
+    callback(context)
+  File "/opt/airflow/dags/insert_data.py", line 50, in uploading_logs
+    postgres_hook.run(query)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[2025-01-10T14:17:21.643+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-10T14:17:21.714+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

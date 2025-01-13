@@ -1,0 +1,13 @@
+[2025-01-12T20:04:09.772+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T20:04:07.223014+00:00 [queued]>
+[2025-01-12T20:04:09.780+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T20:04:07.223014+00:00 [queued]>
+[2025-01-12T20:04:09.781+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T20:04:09.890+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): start_log> on 2025-01-12 20:04:07.223014+00:00
+[2025-01-12T20:04:09.894+0000] {standard_task_runner.py:60} INFO - Started process 8524 to run task
+[2025-01-12T20:04:09.897+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'start_log', 'manual__2025-01-12T20:04:07.223014+00:00', '--job-id', '2898', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp8tk5s9do']
+[2025-01-12T20:04:09.899+0000] {standard_task_runner.py:88} INFO - Job 2898: Subtask start_log
+[2025-01-12T20:04:09.932+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.start_log manual__2025-01-12T20:04:07.223014+00:00 [running]> on host 711845a6becd
+[2025-01-12T20:04:09.987+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='start_log' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T20:04:07.223014+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T20:04:07.223014+00:00'
+[2025-01-12T20:04:15.039+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-01-12T20:04:15.047+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=start_log, execution_date=20250112T200407, start_date=20250112T200409, end_date=20250112T200415
+[2025-01-12T20:04:15.072+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-12T20:04:15.095+0000] {taskinstance.py:3280} INFO - 8 downstream tasks scheduled from follow-on schedule check

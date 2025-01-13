@@ -1,0 +1,82 @@
+[2025-01-07T09:48:10.703+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_md_account_d manual__2025-01-06T13:12:11.564960+00:00 [queued]>
+[2025-01-07T09:48:10.715+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_md_account_d manual__2025-01-06T13:12:11.564960+00:00 [queued]>
+[2025-01-07T09:48:10.716+0000] {taskinstance.py:2170} INFO - Starting attempt 2 of 3
+[2025-01-07T09:48:10.845+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_md_account_d> on 2025-01-06 13:12:11.564960+00:00
+[2025-01-07T09:48:10.851+0000] {standard_task_runner.py:60} INFO - Started process 120 to run task
+[2025-01-07T09:48:10.854+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_md_account_d', 'manual__2025-01-06T13:12:11.564960+00:00', '--job-id', '683', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp9t_uupai']
+[2025-01-07T09:48:10.858+0000] {standard_task_runner.py:88} INFO - Job 683: Subtask sql_md_account_d
+[2025-01-07T09:48:10.899+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_md_account_d manual__2025-01-06T13:12:11.564960+00:00 [running]> on host 25a397655cc7
+[2025-01-07T09:48:10.966+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_md_account_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-06T13:12:11.564960+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-06T13:12:11.564960+00:00'
+[2025-01-07T09:48:10.967+0000] {sql.py:276} INFO - Executing:  INSERT INTO dsl.md_account_d( 
+     data_actual_date
+    ,data_actual_end_date
+    ,account_rk
+    ,account_number
+    ,char_type
+	,currency_rk
+	,currency_code
+)
+SELECT fpf."DATA_ACTUAL_DATE"
+    , to_date(fpf."DATA_ACTUAL_END_DATE", 'dd.mm.YYYY') 
+    , to_date(fpf."ACCOUNT_RK", 'dd.mm.YYYY') 
+    , to_bigint(fpf."ACCOUNT_NUMBER") 
+	, to_char(fpf."CHAR_TYPE")
+	, fpf."CURRENCY_RK" 
+	, fpf."CURRENCY_CODE" 
+  FROM stage.md_account_d fpf
+ WHERE fpf."DATA_ACTUAL_DATE" IS NOT NULL
+   AND fpf."DATA_ACTUAL_END_DATE" IS NOT NULL
+   AND fpf."ACCOUNT_RK" IS NOT NULL
+   AND fpf."ACCOUNT_NUMBER" IS NOT NULL
+   AND fpf."CHAR_TYPE" IS NOT NULL
+   AND fpf."CURRENCY_RK" IS NOT NULL
+   AND fpf."CURRENCY_CODE" IS NOT NULL; 
+
+[2025-01-07T09:48:10.976+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T09:48:10.983+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T09:48:11.033+0000] {sql.py:450} INFO - Running statement:  INSERT INTO dsl.md_account_d( 
+     data_actual_date
+    ,data_actual_end_date
+    ,account_rk
+    ,account_number
+    ,char_type
+	,currency_rk
+	,currency_code
+)
+SELECT fpf."DATA_ACTUAL_DATE"
+    , to_date(fpf."DATA_ACTUAL_END_DATE", 'dd.mm.YYYY') 
+    , to_date(fpf."ACCOUNT_RK", 'dd.mm.YYYY') 
+    , to_bigint(fpf."ACCOUNT_NUMBER") 
+	, to_char(fpf."CHAR_TYPE")
+	, fpf."CURRENCY_RK" 
+	, fpf."CURRENCY_CODE" 
+  FROM stage.md_account_d fpf
+ WHERE fpf."DATA_ACTUAL_DATE" IS NOT NULL
+   AND fpf."DATA_ACTUAL_END_DATE" IS NOT NULL
+   AND fpf."ACCOUNT_RK" IS NOT NULL
+   AND fpf."ACCOUNT_NUMBER" IS NOT NULL
+   AND fpf."CHAR_TYPE" IS NOT NULL
+   AND fpf."CURRENCY_RK" IS NOT NULL
+   AND fpf."CURRENCY_CODE" IS NOT NULL; 
+, parameters: None
+[2025-01-07T09:48:11.038+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "dsl.md_account_d" не существует
+LINE 1:  INSERT INTO dsl.md_account_d( 
+                     ^
+
+[2025-01-07T09:48:11.047+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=sql_md_account_d, execution_date=20250106T131211, start_date=20250107T094810, end_date=20250107T094811
+[2025-01-07T09:48:11.061+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 683 for task sql_md_account_d (ОШИБКА:  отношение "dsl.md_account_d" не существует
+LINE 1:  INSERT INTO dsl.md_account_d( 
+                     ^
+; 120)
+[2025-01-07T09:48:11.069+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-07T09:48:11.095+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

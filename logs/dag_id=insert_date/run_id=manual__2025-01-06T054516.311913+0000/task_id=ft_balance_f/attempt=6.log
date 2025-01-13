@@ -1,0 +1,83 @@
+[2025-01-06T09:22:15.038+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.ft_balance_f manual__2025-01-06T05:45:16.311913+00:00 [queued]>
+[2025-01-06T09:22:15.045+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.ft_balance_f manual__2025-01-06T05:45:16.311913+00:00 [queued]>
+[2025-01-06T09:22:15.046+0000] {taskinstance.py:2170} INFO - Starting attempt 6 of 8
+[2025-01-06T09:22:15.060+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): ft_balance_f> on 2025-01-06 05:45:16.311913+00:00
+[2025-01-06T09:22:15.065+0000] {standard_task_runner.py:60} INFO - Started process 343 to run task
+[2025-01-06T09:22:15.068+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'ft_balance_f', 'manual__2025-01-06T05:45:16.311913+00:00', '--job-id', '191', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpi9a3dbnj']
+[2025-01-06T09:22:15.071+0000] {standard_task_runner.py:88} INFO - Job 191: Subtask ft_balance_f
+[2025-01-06T09:22:15.242+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.ft_balance_f manual__2025-01-06T05:45:16.311913+00:00 [running]> on host 25a397655cc7
+[2025-01-06T09:22:15.302+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='ft_balance_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-06T05:45:16.311913+00:00' AIRFLOW_CTX_TRY_NUMBER='6' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-06T05:45:16.311913+00:00'
+[2025-01-06T09:22:15.313+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-06T09:22:15.379+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+psycopg2.errors.UndefinedColumn: ОШИБКА:  столбец "ON_DATE" в таблице "ft_balance_f" не существует
+LINE 1: INSERT INTO stage.ft_balance_f ("ON_DATE", "ACCOUNT_RK", "CU...
+                                        ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/insert_data.py", line 14, in insert_data
+    df.to_sql(table_name, engine, schema="stage", if_exists="append", index=False)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 2878, in to_sql
+    return sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 769, in to_sql
+    return pandas_sql.to_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1920, in to_sql
+    total_inserted = sql_engine.insert_records(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1470, in insert_records
+    raise err
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1461, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 1023, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/sql.py", line 929, in _execute_insert
+    result = conn.execute(self.table.insert(), data)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) ОШИБКА:  столбец "ON_DATE" в таблице "ft_balance_f" не существует
+LINE 1: INSERT INTO stage.ft_balance_f ("ON_DATE", "ACCOUNT_RK", "CU...
+                                        ^
+
+[SQL: INSERT INTO stage.ft_balance_f ("ON_DATE", "ACCOUNT_RK", "CURRENCY_RK", "BALANCE_OUT") VALUES (%(ON_DATE)s, %(ACCOUNT_RK)s, %(CURRENCY_RK)s, %(BALANCE_OUT)s)]
+[parameters: ({'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 36237725, 'CURRENCY_RK': 35, 'BALANCE_OUT': 38318.13}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 24656, 'CURRENCY_RK': 35, 'BALANCE_OUT': 80533.62}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 18849846, 'CURRENCY_RK': 34, 'BALANCE_OUT': 63891.96}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 1972647, 'CURRENCY_RK': 34, 'BALANCE_OUT': 5087732.1}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 34157174, 'CURRENCY_RK': 34, 'BALANCE_OUT': 7097806.9}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 48829156, 'CURRENCY_RK': 34, 'BALANCE_OUT': 87620.47}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 13905, 'CURRENCY_RK': 34, 'BALANCE_OUT': 129554.0}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 17244, 'CURRENCY_RK': 34, 'BALANCE_OUT': 2025852.49}  ... displaying 10 of 114 total bound parameter sets ...  {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 131824186, 'CURRENCY_RK': 34, 'BALANCE_OUT': 100000.0}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 331483502, 'CURRENCY_RK': 34, 'BALANCE_OUT': 5000000.0})]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-01-06T09:22:15.392+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=ft_balance_f, execution_date=20250106T054516, start_date=20250106T092215, end_date=20250106T092215
+[2025-01-06T09:22:15.402+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 191 for task ft_balance_f ((psycopg2.errors.UndefinedColumn) ОШИБКА:  столбец "ON_DATE" в таблице "ft_balance_f" не существует
+LINE 1: INSERT INTO stage.ft_balance_f ("ON_DATE", "ACCOUNT_RK", "CU...
+                                        ^
+
+[SQL: INSERT INTO stage.ft_balance_f ("ON_DATE", "ACCOUNT_RK", "CURRENCY_RK", "BALANCE_OUT") VALUES (%(ON_DATE)s, %(ACCOUNT_RK)s, %(CURRENCY_RK)s, %(BALANCE_OUT)s)]
+[parameters: ({'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 36237725, 'CURRENCY_RK': 35, 'BALANCE_OUT': 38318.13}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 24656, 'CURRENCY_RK': 35, 'BALANCE_OUT': 80533.62}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 18849846, 'CURRENCY_RK': 34, 'BALANCE_OUT': 63891.96}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 1972647, 'CURRENCY_RK': 34, 'BALANCE_OUT': 5087732.1}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 34157174, 'CURRENCY_RK': 34, 'BALANCE_OUT': 7097806.9}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 48829156, 'CURRENCY_RK': 34, 'BALANCE_OUT': 87620.47}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 13905, 'CURRENCY_RK': 34, 'BALANCE_OUT': 129554.0}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 17244, 'CURRENCY_RK': 34, 'BALANCE_OUT': 2025852.49}  ... displaying 10 of 114 total bound parameter sets ...  {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 131824186, 'CURRENCY_RK': 34, 'BALANCE_OUT': 100000.0}, {'ON_DATE': '31.12.2017', 'ACCOUNT_RK': 331483502, 'CURRENCY_RK': 34, 'BALANCE_OUT': 5000000.0})]
+(Background on this error at: https://sqlalche.me/e/14/f405); 343)
+[2025-01-06T09:22:15.441+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-06T09:22:15.577+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

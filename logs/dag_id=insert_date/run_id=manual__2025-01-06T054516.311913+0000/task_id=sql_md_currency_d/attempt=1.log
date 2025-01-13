@@ -1,0 +1,45 @@
+[2025-01-07T13:08:48.379+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_md_currency_d manual__2025-01-06T05:45:16.311913+00:00 [queued]>
+[2025-01-07T13:08:48.442+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_md_currency_d manual__2025-01-06T05:45:16.311913+00:00 [queued]>
+[2025-01-07T13:08:48.446+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-07T13:08:49.014+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_md_currency_d> on 2025-01-06 05:45:16.311913+00:00
+[2025-01-07T13:08:49.045+0000] {standard_task_runner.py:60} INFO - Started process 409 to run task
+[2025-01-07T13:08:49.064+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_md_currency_d', 'manual__2025-01-06T05:45:16.311913+00:00', '--job-id', '912', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpg7e2i7ht']
+[2025-01-07T13:08:49.077+0000] {standard_task_runner.py:88} INFO - Job 912: Subtask sql_md_currency_d
+[2025-01-07T13:08:49.351+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_md_currency_d manual__2025-01-06T05:45:16.311913+00:00 [running]> on host 25a397655cc7
+[2025-01-07T13:08:49.724+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_md_currency_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-06T05:45:16.311913+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-06T05:45:16.311913+00:00'
+[2025-01-07T13:08:49.735+0000] {sql.py:276} INFO - Executing:  INSERT INTO dsl.md_currency_d(
+      currency_rk
+    , data_actual_date
+    , data_actual_end_date
+    , currency_code
+    , code_iso_char
+)
+SELECT mcd."CURRENCY_RK"
+    , to_date(mcd."DATA_ACTUAL_DATE", '%Y-%m-%d') 
+    , to_date(mcd."DATA_ACTUAL_END_DATE", '%Y-%m-%d')
+    , mcd."CURRENCY_CODE" 
+	, mcd."CODE_ISO_CHAR" 
+  FROM stage.md_currency_d mcd
+ WHERE mcd."CURRENCY_RK" IS NOT NULL
+   AND mcd."DATA_ACTUAL_DATE" IS NOT NULL; 
+[2025-01-07T13:08:49.779+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T13:08:49.813+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-07T13:08:50.004+0000] {sql.py:450} INFO - Running statement:  INSERT INTO dsl.md_currency_d(
+      currency_rk
+    , data_actual_date
+    , data_actual_end_date
+    , currency_code
+    , code_iso_char
+)
+SELECT mcd."CURRENCY_RK"
+    , to_date(mcd."DATA_ACTUAL_DATE", '%Y-%m-%d') 
+    , to_date(mcd."DATA_ACTUAL_END_DATE", '%Y-%m-%d')
+    , mcd."CURRENCY_CODE" 
+	, mcd."CODE_ISO_CHAR" 
+  FROM stage.md_currency_d mcd
+ WHERE mcd."CURRENCY_RK" IS NOT NULL
+   AND mcd."DATA_ACTUAL_DATE" IS NOT NULL; , parameters: None
+[2025-01-07T13:08:50.033+0000] {sql.py:459} INFO - Rows affected: 1450
+[2025-01-07T13:08:50.119+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=sql_md_currency_d, execution_date=20250106T054516, start_date=20250107T130848, end_date=20250107T130850
+[2025-01-07T13:08:50.273+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-07T13:08:50.617+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

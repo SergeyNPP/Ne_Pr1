@@ -1,0 +1,61 @@
+[2025-01-12T17:58:38.130+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_md_exchange_rate_d manual__2025-01-12T17:58:22.215881+00:00 [queued]>
+[2025-01-12T17:58:38.145+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_md_exchange_rate_d manual__2025-01-12T17:58:22.215881+00:00 [queued]>
+[2025-01-12T17:58:38.146+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T17:58:38.341+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_md_exchange_rate_d> on 2025-01-12 17:58:22.215881+00:00
+[2025-01-12T17:58:38.348+0000] {standard_task_runner.py:60} INFO - Started process 5902 to run task
+[2025-01-12T17:58:38.352+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_md_exchange_rate_d', 'manual__2025-01-12T17:58:22.215881+00:00', '--job-id', '2627', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpq2_6mvpn']
+[2025-01-12T17:58:38.355+0000] {standard_task_runner.py:88} INFO - Job 2627: Subtask sql_md_exchange_rate_d
+[2025-01-12T17:58:38.420+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_md_exchange_rate_d manual__2025-01-12T17:58:22.215881+00:00 [running]> on host 711845a6becd
+[2025-01-12T17:58:38.524+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_md_exchange_rate_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T17:58:22.215881+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T17:58:22.215881+00:00'
+[2025-01-12T17:58:38.526+0000] {sql.py:276} INFO - Executing: INSERT INTO ds.md_exchange_rate_d( 
+    data_actual_date
+    ,data_actual_end_date
+    ,currency_rk
+	,reduced_cource
+	,code_iso_num
+)
+SELECT distinct
+    to_date(merd."DATA_ACTUAL_DATE", 'YYYY-mm-dd') as data_actual_date
+    , to_date(merd."DATA_ACTUAL_END_DATE", 'YYYY-mm-dd') as data_actual_end_date
+	, merd."CURRENCY_RK"
+	, merd."REDUCED_COURCE"
+	, merd."CODE_ISO_NUM"
+FROM stage.md_exchange_rate_d merd
+WHERE merd."DATA_ACTUAL_DATE" IS NOT NULL
+   AND merd."CURRENCY_RK" IS NOT NULL
+on conflict on constraint md_exchange_rate_d_pkey do update
+	set data_actual_end_date=excluded.data_actual_end_date
+		,reduced_cource=excluded.reduced_cource
+		,code_iso_num=excluded.code_iso_num; 
+[2025-01-12T17:58:38.537+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:58:38.548+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:58:38.623+0000] {sql.py:450} INFO - Running statement: INSERT INTO ds.md_exchange_rate_d( 
+    data_actual_date
+    ,data_actual_end_date
+    ,currency_rk
+	,reduced_cource
+	,code_iso_num
+)
+SELECT distinct
+    to_date(merd."DATA_ACTUAL_DATE", 'YYYY-mm-dd') as data_actual_date
+    , to_date(merd."DATA_ACTUAL_END_DATE", 'YYYY-mm-dd') as data_actual_end_date
+	, merd."CURRENCY_RK"
+	, merd."REDUCED_COURCE"
+	, merd."CODE_ISO_NUM"
+FROM stage.md_exchange_rate_d merd
+WHERE merd."DATA_ACTUAL_DATE" IS NOT NULL
+   AND merd."CURRENCY_RK" IS NOT NULL
+on conflict on constraint md_exchange_rate_d_pkey do update
+	set data_actual_end_date=excluded.data_actual_end_date
+		,reduced_cource=excluded.reduced_cource
+		,code_iso_num=excluded.code_iso_num; , parameters: None
+[2025-01-12T17:58:38.724+0000] {sql.py:459} INFO - Rows affected: 460
+[2025-01-12T17:58:38.740+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=sql_md_exchange_rate_d, execution_date=20250112T175822, start_date=20250112T175838, end_date=20250112T175838
+[2025-01-12T17:58:38.746+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T17:58:38.805+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-12 17:58:22.215881', '2025-01-12T17:58:38.741629', 'sql_md_exchange_rate_d');
+    , parameters: None
+[2025-01-12T17:58:38.810+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-12T17:58:38.847+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-12T17:58:38.904+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

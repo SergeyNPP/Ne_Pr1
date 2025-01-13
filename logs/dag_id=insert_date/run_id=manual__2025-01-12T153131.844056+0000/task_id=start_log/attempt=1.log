@@ -1,0 +1,66 @@
+[2025-01-12T15:31:35.189+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T15:31:31.844056+00:00 [queued]>
+[2025-01-12T15:31:35.200+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T15:31:31.844056+00:00 [queued]>
+[2025-01-12T15:31:35.201+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T15:31:35.329+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): start_log> on 2025-01-12 15:31:31.844056+00:00
+[2025-01-12T15:31:35.334+0000] {standard_task_runner.py:60} INFO - Started process 3748 to run task
+[2025-01-12T15:31:35.337+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'start_log', 'manual__2025-01-12T15:31:31.844056+00:00', '--job-id', '2357', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpw5xzwxjc']
+[2025-01-12T15:31:35.339+0000] {standard_task_runner.py:88} INFO - Job 2357: Subtask start_log
+[2025-01-12T15:31:35.382+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.start_log manual__2025-01-12T15:31:31.844056+00:00 [running]> on host 711845a6becd
+[2025-01-12T15:31:35.445+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='start_log' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T15:31:31.844056+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T15:31:31.844056+00:00'
+[2025-01-12T15:31:35.495+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.InvalidDatetimeFormat: ОШИБКА:  неверный синтаксис для типа timestamp: "manual__2025-01-12T15:31:31.844056+00:00"
+LINE 3:             VALUES ('manual__2025-01-12T15:31:31.844056+00:0...
+                            ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/insert_data.py", line 65, in start_log
+    connection.execute(f"""
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1370, in execute
+    return self._exec_driver_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1674, in _exec_driver_sql
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.errors.InvalidDatetimeFormat) ОШИБКА:  неверный синтаксис для типа timestamp: "manual__2025-01-12T15:31:31.844056+00:00"
+LINE 3:             VALUES ('manual__2025-01-12T15:31:31.844056+00:0...
+                            ^
+
+[SQL: 
+            INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+            VALUES ('manual__2025-01-12T15:31:31.844056+00:00', '5', 'manual__2025-01-12T15:31:31.844056+00:00');
+        ]
+(Background on this error at: https://sqlalche.me/e/14/9h9h)
+[2025-01-12T15:31:35.505+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=start_log, execution_date=20250112T153131, start_date=20250112T153135, end_date=20250112T153135
+[2025-01-12T15:31:35.516+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 2357 for task start_log ((psycopg2.errors.InvalidDatetimeFormat) ОШИБКА:  неверный синтаксис для типа timestamp: "manual__2025-01-12T15:31:31.844056+00:00"
+LINE 3:             VALUES ('manual__2025-01-12T15:31:31.844056+00:0...
+                            ^
+
+[SQL: 
+            INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+            VALUES ('manual__2025-01-12T15:31:31.844056+00:00', '5', 'manual__2025-01-12T15:31:31.844056+00:00');
+        ]
+(Background on this error at: https://sqlalche.me/e/14/9h9h); 3748)
+[2025-01-12T15:31:35.550+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-12T15:31:35.572+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

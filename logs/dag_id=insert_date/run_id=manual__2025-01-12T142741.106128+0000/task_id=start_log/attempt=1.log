@@ -1,0 +1,66 @@
+[2025-01-12T14:27:43.453+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T14:27:41.106128+00:00 [queued]>
+[2025-01-12T14:27:43.465+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.start_log manual__2025-01-12T14:27:41.106128+00:00 [queued]>
+[2025-01-12T14:27:43.466+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T14:27:43.611+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): start_log> on 2025-01-12 14:27:41.106128+00:00
+[2025-01-12T14:27:43.616+0000] {standard_task_runner.py:60} INFO - Started process 2437 to run task
+[2025-01-12T14:27:43.618+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'start_log', 'manual__2025-01-12T14:27:41.106128+00:00', '--job-id', '2229', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpo9b3u8qn']
+[2025-01-12T14:27:43.620+0000] {standard_task_runner.py:88} INFO - Job 2229: Subtask start_log
+[2025-01-12T14:27:43.663+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.start_log manual__2025-01-12T14:27:41.106128+00:00 [running]> on host 711845a6becd
+[2025-01-12T14:27:43.729+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='start_log' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T14:27:41.106128+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T14:27:41.106128+00:00'
+[2025-01-12T14:27:43.780+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/insert_data.py", line 63, in start_log
+    connection.execute(f"""
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1370, in execute
+    return self._exec_driver_sql(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1674, in _exec_driver_sql
+    ret = self._execute_context(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[SQL: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('manual__2025-01-12T14:27:41.106128+00:00', '2025-01-12T14:27:43.777362', 'manual__2025-01-12T14:27:41.106128+00:00');
+    ]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-01-12T14:27:43.793+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=insert_date, task_id=start_log, execution_date=20250112T142741, start_date=20250112T142743, end_date=20250112T142743
+[2025-01-12T14:27:43.803+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 2229 for task start_log ((psycopg2.errors.UndefinedTable) ОШИБКА:  отношение "log.logt" не существует
+LINE 2:         INSERT INTO log.logt (execution_datetime, event_date...
+                            ^
+
+[SQL: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('manual__2025-01-12T14:27:41.106128+00:00', '2025-01-12T14:27:43.777362', 'manual__2025-01-12T14:27:41.106128+00:00');
+    ]
+(Background on this error at: https://sqlalche.me/e/14/f405); 2437)
+[2025-01-12T14:27:43.831+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-12T14:27:43.854+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

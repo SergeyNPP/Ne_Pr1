@@ -1,0 +1,89 @@
+[2025-01-12T13:53:14.931+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.sql_md_account_d manual__2025-01-12T13:53:08.128159+00:00 [queued]>
+[2025-01-12T13:53:14.946+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.sql_md_account_d manual__2025-01-12T13:53:08.128159+00:00 [queued]>
+[2025-01-12T13:53:14.946+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-12T13:53:15.146+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_md_account_d> on 2025-01-12 13:53:08.128159+00:00
+[2025-01-12T13:53:15.154+0000] {standard_task_runner.py:60} INFO - Started process 1687 to run task
+[2025-01-12T13:53:15.157+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'sql_md_account_d', 'manual__2025-01-12T13:53:08.128159+00:00', '--job-id', '2147', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp8fif3o6h']
+[2025-01-12T13:53:15.160+0000] {standard_task_runner.py:88} INFO - Job 2147: Subtask sql_md_account_d
+[2025-01-12T13:53:15.214+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.sql_md_account_d manual__2025-01-12T13:53:08.128159+00:00 [running]> on host 711845a6becd
+[2025-01-12T13:53:15.320+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='sql_md_account_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T13:53:08.128159+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-12T13:53:08.128159+00:00'
+[2025-01-12T13:53:15.322+0000] {sql.py:276} INFO - Executing: INSERT INTO ds.md_account_d( 
+     data_actual_date
+    ,data_actual_end_date
+    ,account_rk
+    ,account_number
+    ,char_type
+	,currency_rk
+	,currency_code
+)
+SELECT distinct
+      to_date(mad."DATA_ACTUAL_DATE", '%Y-%m-%d') 
+    , to_date(mad."DATA_ACTUAL_END_DATE", '%Y-%m-%d')
+    , mad."ACCOUNT_RK"
+    , SUBSTRING(mad."ACCOUNT_NUMBER", 3)::BIGINT
+	, mad."CHAR_TYPE"
+	, mad."CURRENCY_RK"
+	, mad."CURRENCY_CODE"
+FROM stage.md_account_d mad
+WHERE mad."DATA_ACTUAL_DATE" IS NOT NULL
+   AND mad."DATA_ACTUAL_END_DATE" IS NOT NULL
+   AND mad."ACCOUNT_RK" IS NOT NULL
+   AND mad."ACCOUNT_NUMBER" IS NOT NULL
+   AND mad."CHAR_TYPE" IS NOT NULL
+   AND mad."CURRENCY_RK" IS NOT NULL
+   AND mad."CURRENCY_CODE" IS NOT NULL
+On conflict on constraint md_account_d_pkey do update
+	set data_actual_end_date=excluded.data_actual_end_date
+		,account_number=excluded.account_number
+		,char_type=excluded.char_type
+		,currency_rk=excluded.currency_rk
+		,currency_code=excluded.currency_code; 
+
+
+
+[2025-01-12T13:53:15.331+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T13:53:15.340+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T13:53:15.396+0000] {sql.py:450} INFO - Running statement: INSERT INTO ds.md_account_d( 
+     data_actual_date
+    ,data_actual_end_date
+    ,account_rk
+    ,account_number
+    ,char_type
+	,currency_rk
+	,currency_code
+)
+SELECT distinct
+      to_date(mad."DATA_ACTUAL_DATE", '%Y-%m-%d') 
+    , to_date(mad."DATA_ACTUAL_END_DATE", '%Y-%m-%d')
+    , mad."ACCOUNT_RK"
+    , SUBSTRING(mad."ACCOUNT_NUMBER", 3)::BIGINT
+	, mad."CHAR_TYPE"
+	, mad."CURRENCY_RK"
+	, mad."CURRENCY_CODE"
+FROM stage.md_account_d mad
+WHERE mad."DATA_ACTUAL_DATE" IS NOT NULL
+   AND mad."DATA_ACTUAL_END_DATE" IS NOT NULL
+   AND mad."ACCOUNT_RK" IS NOT NULL
+   AND mad."ACCOUNT_NUMBER" IS NOT NULL
+   AND mad."CHAR_TYPE" IS NOT NULL
+   AND mad."CURRENCY_RK" IS NOT NULL
+   AND mad."CURRENCY_CODE" IS NOT NULL
+On conflict on constraint md_account_d_pkey do update
+	set data_actual_end_date=excluded.data_actual_end_date
+		,account_number=excluded.account_number
+		,char_type=excluded.char_type
+		,currency_rk=excluded.currency_rk
+		,currency_code=excluded.currency_code; 
+
+
+, parameters: None
+[2025-01-12T13:53:15.408+0000] {sql.py:459} INFO - Rows affected: 112
+[2025-01-12T13:53:15.422+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=sql_md_account_d, execution_date=20250112T135308, start_date=20250112T135314, end_date=20250112T135315
+[2025-01-12T13:53:15.426+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-12T13:53:15.582+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-12T13:53:08.128159', '2025-01-12T13:53:15.423224', 'sql_md_account_d');
+    , parameters: None
+[2025-01-12T13:53:15.586+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-12T13:53:15.651+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-12T13:53:15.676+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
