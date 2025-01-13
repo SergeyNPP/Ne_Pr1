@@ -12,10 +12,10 @@ import pandas
 
 PATH = Variable.get("my_path")
 conf.set("core", "template_searchpath", PATH)
-date_now = datetime.now()
+
 postgres_hook = PostgresHook("postgres-db")
 engine = postgres_hook.get_sqlalchemy_engine()
-
+date_now = datetime.now()
 
 def insert_data(table_name):
     try:
@@ -56,8 +56,19 @@ def start_log(**kwargs):
         """)
     sleep(5)
 
-
-
+def end_log(**kwargs):
+    context = kwargs
+    dag_run = context['dag_run'].run_id
+    ts = context['dag_run'].execution_date.timestamp()
+    ts = datetime.fromtimestamp(ts)
+    log_schema = 'log'
+    log_table = 'logt'
+    with engine.connect() as connection:
+        connection.execute(f"""
+            INSERT INTO {log_schema}.{log_table} (execution_datetime, event_datetime, event_name)
+            VALUES ('{ts}', '{datetime.now().isoformat(sep='T')}', '{"dag_run_end"}');
+        """)
+ 
 default_args = {
     "owner" : "budanovsa",
     "start_date" : date_now,
@@ -67,7 +78,7 @@ default_args = {
 with DAG(
     "insert_date",
     default_args=default_args,
-    description="Загрузка данных в stage и log",
+    description="Загрузка данных в stage и log и ds",
     catchup=False,
     template_searchpath = [PATH],
     schedule="0 0 * * *"
@@ -187,6 +198,11 @@ with DAG(
         on_success_callback=uploading_logs
     )
 
+    task_end_log = PythonOperator(
+        task_id="end_log",
+        python_callable=end_log,
+    )
+    
     end = DummyOperator(
         task_id="end",
         on_success_callback=uploading_logs
@@ -197,5 +213,6 @@ with DAG(
         >>[create_schema_ds, create_log_sheme, ft_balance_f, ft_posting_f, md_account_d, md_currency_d, md_exchange_rate_d, md_ledger_account_s]
         >>split
         >>[sql_ft_balance_f, sql_ft_posting_f, sql_md_account_d, sql_md_currency_d, sql_md_exchange_rate_d, sql_md_ledger_account_s]
+        >>task_end_log
         >>end
     }

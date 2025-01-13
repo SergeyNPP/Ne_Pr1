@@ -1,0 +1,19 @@
+[2025-01-13T18:09:43.610+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.ft_balance_f manual__2025-01-13T18:09:34.395772+00:00 [queued]>
+[2025-01-13T18:09:43.627+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.ft_balance_f manual__2025-01-13T18:09:34.395772+00:00 [queued]>
+[2025-01-13T18:09:43.628+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-13T18:09:43.930+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): ft_balance_f> on 2025-01-13 18:09:34.395772+00:00
+[2025-01-13T18:09:43.939+0000] {standard_task_runner.py:60} INFO - Started process 2476 to run task
+[2025-01-13T18:09:43.945+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'ft_balance_f', 'manual__2025-01-13T18:09:34.395772+00:00', '--job-id', '3061', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpbdv78ceq']
+[2025-01-13T18:09:43.948+0000] {standard_task_runner.py:88} INFO - Job 3061: Subtask ft_balance_f
+[2025-01-13T18:09:44.021+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.ft_balance_f manual__2025-01-13T18:09:34.395772+00:00 [running]> on host 711845a6becd
+[2025-01-13T18:09:44.144+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='ft_balance_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T18:09:34.395772+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T18:09:34.395772+00:00'
+[2025-01-13T18:09:44.302+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-01-13T18:09:44.318+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=ft_balance_f, execution_date=20250113T180934, start_date=20250113T180943, end_date=20250113T180944
+[2025-01-13T18:09:44.328+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-13T18:09:44.400+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-13 18:09:34.395772', '2025-01-13T18:09:44.319876', 'ft_balance_f');
+    , parameters: None
+[2025-01-13T18:09:44.404+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-13T18:09:44.443+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-13T18:09:44.526+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
