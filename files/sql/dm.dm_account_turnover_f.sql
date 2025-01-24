@@ -1,22 +1,27 @@
--- CREATE TABLE dm.dm_account_turnover_f(
---   oper_date         DATE
---   ,account_rk        int
---   , debet_amount      NUMERIC(19,2)
---   , reduced_cource_debet bigint
---   , credit_amount     NUMERIC(19,2)
---   ,reduced_cource_credit bigint
---  );
 --Создание функции dm_account_turnover_f 
 --вывод проводок по счетам за дату i_OnDate
 --ковертация в рубли дебетового и кредитного счетов
+--обороты по лицевым счетам
 create or replace procedure dm.dm_account_turnover_f(i_OnDate date)
 AS $$
 declare 
 start_log timestamp;
 end_log timestamp;
 begin
+--логирование начала выполнения процедуры
 start_log = (select now());
+--для возможности запускать для одной и той же даты
 delete from dm.dm_account_turnover_f where oper_date = i_OnDate;
+ 
+insert into dm.dm_account_turnover_f(
+  oper_date
+  ,account_rk
+  ,debet_amount
+  ,reduced_cource_debet
+  ,credit_amount
+  ,reduced_cource_credit
+)
+-- кредитные счета, по которым были проводки
 with sum_cred_p as (
   SELECT 
     sum(credit_amount) as credit_amount
@@ -25,6 +30,7 @@ with sum_cred_p as (
   where oper_date = i_OnDate
   group by credit_account_rk
   )
+-- текущий курс
 ,reduced_cource as (
   SELECT 
     reduced_cource
@@ -34,6 +40,7 @@ with sum_cred_p as (
     between data_actual_date 
 	and data_actual_end_date
   )
+ -- дебетовые счета, по которым были проводки  
 ,sum_deb_p as (
   SELECT 
     sum(debet_amount ) as debet_amount 
@@ -42,15 +49,6 @@ with sum_cred_p as (
   where oper_date = i_OnDate
   group by debet_account_rk
   )
-insert into dm.dm_account_turnover_f(
-  oper_date
-  ,account_rk
-  ,debet_amount
-  ,reduced_cource_debet
-  ,credit_amount
-  ,reduced_cource_credit
-)
-
 SELECT
   i_OnDate as oper_date
   ,account_rk
@@ -73,38 +71,17 @@ LANGUAGE plpgsql;
 ---
 call dm.dm_account_turnover_f('2018-01-09');
 select * from dm.dm_account_turnover_f;
+select distinct f.account_rk from dm.dm_account_turnover_f f;
 truncate dm.dm_account_turnover_f;
---
 
-
---создание таблицы dm_account_balance_f в схеме dm
-create table if not exists dm.dm_account_balance_f(
-  oper_date date not null
-  ,account_rk numeric not null
-  ,currency_rk numeric
-  ,balance_out bigint
-  ,balance_out_rub bigint
-);
---Расчет суммы за 2017-12-31 по заданию. 
-with exchange_rate as (
-  select merd.reduced_cource, merd.currency_rk
-  from ds.md_exchange_rate_d merd
-  where '2017-12-31' between merd.data_actual_date and merd.data_actual_end_date
-)
-insert into dm.dm_account_balance_f
-  select 
-    ft_bf.on_date
-	,ft_bf.account_rk
-	,ft_bf.currency_rk
-	,ft_bf.balance_out
-	,ft_bf.balance_out*coalesce(er.reduced_cource, 1)
-  from ds.ft_balance_f ft_bf
-  left join exchange_rate er using(currency_rk);
-
---
-select * from dm.dm_account_turnover_f;
---
-
+--демонстрация за разные даты
+  truncate dm.dm_account_turnover_f;
+  call dm.dm_account_turnover_f('2018-01-08');
+  select * from dm.dm_account_turnover_f;
+  call dm.dm_account_turnover_f('2018-01-10');
+  select * from dm.dm_account_turnover_f;
+  
+--заполнение за весь месяц
 do
 $$
 begin
@@ -119,17 +96,14 @@ select * from dm.dm_account_turnover_f;
 truncate dm.dm_account_turnover_f;
 --
 
--- begin
---   truncate dm.dm_account_turnover_f;
---   call ds.fill_account_turnover_f('2018-01-08');
---   select * from dm.dm_account_turnover_f;
---   call ds.fill_account_turnover_f('2018-01-09');
---   select * from dm.dm_account_turnover_f;
---   call ds.fill_account_turnover_f('2018-01-10');
---   select * from dm.dm_account_turnover_f;
--- rollback;
--- commit;
 
+--Создатьпроцедуру по остаткам лицевых счетов
+--создание таблицы dm_account_balance_f в схеме dm
+
+
+--
+select * from dm.dm_account_balance_f;
+--
 
 --Процедура нахождения остатков на счетах на текущую дату
 create or replace procedure dm.fill_account_balance_out_f(i_OnDate date)
@@ -140,14 +114,16 @@ start_log timestamp;
 end_log timestamp;
 begin
   start_log = (select now());
+--для возможности запускать для одной и той же даты
 delete from dm.dm_account_balance_f where oper_date = i_OnDate;
-
+---актуальность счетов
 with actual_acc as (
   select 
     mdad.account_rk
 	,mdad.char_type
   from ds.md_account_d mdad
 )
+--текущий баланс по лицевому счету
   ,current_balance as (
   select *
   from ds.dm_account_turnover_f dm_atf
@@ -182,6 +158,23 @@ VALUES (start_log, end_log, 'log_dm_account_balance_f '||i_OnDate);
 end
 $$ language plpgsql;
 
+--Расчет остатка на 2017-12-31 
+with exchange_rate as (
+  select merd.reduced_cource, merd.currency_rk
+  from ds.md_exchange_rate_d merd
+  where '2017-12-31' between merd.data_actual_date and merd.data_actual_end_date
+)
+insert into dm.dm_account_balance_f
+  select 
+    ft_bf.on_date
+	,ft_bf.account_rk
+	,ft_bf.currency_rk
+	,ft_bf.balance_out
+	,ft_bf.balance_out*coalesce(er.reduced_cource, 1)
+  from ds.ft_balance_f ft_bf
+  left join exchange_rate er using(currency_rk);
+
+
 --Заполним таблицу остатков за весь месяц
 do
   $$
@@ -196,25 +189,22 @@ select * from dm.dm_account_balance_f;
 
 truncate dm.dm_account_balance_f;
 
-  begin;
   call dm.fill_account_balance_out_f('2018-01-01');
   select * from dm.dm_account_balance_f
   order by account_rk, oper_date;
   
   
   select * from dm.dm_account_balance_f
-  order by account_rk;
+  order by account_rk, oper_date;
 
-  call ds.fill_account_balance_f('2018-01-11');
+  call dm.fill_account_balance_out_f('2018-01-11');
   select * from dm.dm_account_balance_f dabf
-  where dabf.on_date between '2018-01-10' and '2018-01-11';
+  where dabf.oper_date between '2018-01-10' and '2018-01-11';
 
-  call ds.fill_account_balance_f('2018-01-12');
+  call dm.fill_account_balance_out_f('2018-01-12');
   select * from dm.dm_account_balance_f dabf
-  where dabf.on_date between '2018-01-11' and '2018-01-12';
+  where dabf.oper_date between '2018-01-11' and '2018-01-12';
 
-  rollback;
-  commit;
 
   
 
