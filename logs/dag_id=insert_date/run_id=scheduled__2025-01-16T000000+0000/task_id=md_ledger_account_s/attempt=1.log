@@ -1,0 +1,19 @@
+[2025-01-27T15:25:33.107+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.md_ledger_account_s scheduled__2025-01-16T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:33.126+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.md_ledger_account_s scheduled__2025-01-16T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:33.127+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T15:25:33.671+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): md_ledger_account_s> on 2025-01-16 00:00:00+00:00
+[2025-01-27T15:25:33.679+0000] {standard_task_runner.py:60} INFO - Started process 122 to run task
+[2025-01-27T15:25:33.689+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'md_ledger_account_s', 'scheduled__2025-01-16T00:00:00+00:00', '--job-id', '3169', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpm9jd9me7']
+[2025-01-27T15:25:33.694+0000] {standard_task_runner.py:88} INFO - Job 3169: Subtask md_ledger_account_s
+[2025-01-27T15:25:33.827+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.md_ledger_account_s scheduled__2025-01-16T00:00:00+00:00 [running]> on host 711845a6becd
+[2025-01-27T15:25:34.173+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='md_ledger_account_s' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-16T00:00:00+00:00'
+[2025-01-27T15:25:34.667+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-01-27T15:25:34.685+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=md_ledger_account_s, execution_date=20250116T000000, start_date=20250127T152533, end_date=20250127T152534
+[2025-01-27T15:25:34.768+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T15:25:34.893+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-16 00:00:00', '2025-01-27T15:25:34.687969', 'md_ledger_account_s');
+    , parameters: None
+[2025-01-27T15:25:34.899+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-27T15:25:34.977+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-27T15:25:35.035+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

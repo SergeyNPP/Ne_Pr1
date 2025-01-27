@@ -1,0 +1,18 @@
+[2025-01-27T15:30:13.867+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.end manual__2025-01-27T15:29:58.093293+00:00 [queued]>
+[2025-01-27T15:30:13.876+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.end manual__2025-01-27T15:29:58.093293+00:00 [queued]>
+[2025-01-27T15:30:13.877+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T15:30:14.007+0000] {taskinstance.py:2191} INFO - Executing <Task(EmptyOperator): end> on 2025-01-27 15:29:58.093293+00:00
+[2025-01-27T15:30:14.013+0000] {standard_task_runner.py:60} INFO - Started process 316 to run task
+[2025-01-27T15:30:14.016+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'end', 'manual__2025-01-27T15:29:58.093293+00:00', '--job-id', '3213', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp4dc3ol1b']
+[2025-01-27T15:30:14.019+0000] {standard_task_runner.py:88} INFO - Job 3213: Subtask end
+[2025-01-27T15:30:14.061+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.end manual__2025-01-27T15:29:58.093293+00:00 [running]> on host 711845a6becd
+[2025-01-27T15:30:14.132+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='end' AIRFLOW_CTX_EXECUTION_DATE='2025-01-27T15:29:58.093293+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-27T15:29:58.093293+00:00'
+[2025-01-27T15:30:14.142+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=end, execution_date=20250127T152958, start_date=20250127T153013, end_date=20250127T153014
+[2025-01-27T15:30:14.147+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T15:30:14.192+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-27 15:29:58.093293', '2025-01-27T15:30:14.143162', 'end');
+    , parameters: None
+[2025-01-27T15:30:14.196+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-27T15:30:14.231+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-27T15:30:14.246+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

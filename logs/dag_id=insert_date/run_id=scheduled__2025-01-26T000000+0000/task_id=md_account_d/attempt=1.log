@@ -1,0 +1,19 @@
+[2025-01-27T15:25:33.054+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.md_account_d scheduled__2025-01-26T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:33.105+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.md_account_d scheduled__2025-01-26T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:33.107+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T15:25:33.743+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): md_account_d> on 2025-01-26 00:00:00+00:00
+[2025-01-27T15:25:33.758+0000] {standard_task_runner.py:60} INFO - Started process 127 to run task
+[2025-01-27T15:25:33.766+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'md_account_d', 'scheduled__2025-01-26T00:00:00+00:00', '--job-id', '3168', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmp128gtl0a']
+[2025-01-27T15:25:33.776+0000] {standard_task_runner.py:88} INFO - Job 3168: Subtask md_account_d
+[2025-01-27T15:25:33.911+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.md_account_d scheduled__2025-01-26T00:00:00+00:00 [running]> on host 711845a6becd
+[2025-01-27T15:25:34.202+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='md_account_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-26T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-26T00:00:00+00:00'
+[2025-01-27T15:25:34.533+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-01-27T15:25:34.583+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=md_account_d, execution_date=20250126T000000, start_date=20250127T152533, end_date=20250127T152534
+[2025-01-27T15:25:34.743+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T15:25:34.862+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-26 00:00:00', '2025-01-27T15:25:34.587377', 'md_account_d');
+    , parameters: None
+[2025-01-27T15:25:34.867+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-27T15:25:34.946+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-27T15:25:34.998+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

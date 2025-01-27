@@ -1,0 +1,13 @@
+[2025-01-27T15:25:41.715+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.end_log scheduled__2025-01-26T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:41.726+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.end_log scheduled__2025-01-26T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:41.727+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T15:25:41.886+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): end_log> on 2025-01-26 00:00:00+00:00
+[2025-01-27T15:25:41.893+0000] {standard_task_runner.py:60} INFO - Started process 183 to run task
+[2025-01-27T15:25:41.897+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'end_log', 'scheduled__2025-01-26T00:00:00+00:00', '--job-id', '3192', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpozeukto0']
+[2025-01-27T15:25:41.900+0000] {standard_task_runner.py:88} INFO - Job 3192: Subtask end_log
+[2025-01-27T15:25:41.958+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.end_log scheduled__2025-01-26T00:00:00+00:00 [running]> on host 711845a6becd
+[2025-01-27T15:25:42.052+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='end_log' AIRFLOW_CTX_EXECUTION_DATE='2025-01-26T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-26T00:00:00+00:00'
+[2025-01-27T15:25:42.133+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-01-27T15:25:42.143+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=end_log, execution_date=20250126T000000, start_date=20250127T152541, end_date=20250127T152542
+[2025-01-27T15:25:42.191+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-27T15:25:42.212+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,19 @@
+[2025-01-27T15:25:33.718+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: insert_date.md_exchange_rate_d scheduled__2025-01-16T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:33.747+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: insert_date.md_exchange_rate_d scheduled__2025-01-16T00:00:00+00:00 [queued]>
+[2025-01-27T15:25:33.751+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T15:25:34.776+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): md_exchange_rate_d> on 2025-01-16 00:00:00+00:00
+[2025-01-27T15:25:34.804+0000] {standard_task_runner.py:60} INFO - Started process 133 to run task
+[2025-01-27T15:25:34.811+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'insert_date', 'md_exchange_rate_d', 'scheduled__2025-01-16T00:00:00+00:00', '--job-id', '3175', '--raw', '--subdir', 'DAGS_FOLDER/insert_data.py', '--cfg-path', '/tmp/tmpbh7kqos7']
+[2025-01-27T15:25:34.817+0000] {standard_task_runner.py:88} INFO - Job 3175: Subtask md_exchange_rate_d
+[2025-01-27T15:25:34.971+0000] {task_command.py:423} INFO - Running <TaskInstance: insert_date.md_exchange_rate_d scheduled__2025-01-16T00:00:00+00:00 [running]> on host 711845a6becd
+[2025-01-27T15:25:35.160+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='insert_date' AIRFLOW_CTX_TASK_ID='md_exchange_rate_d' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-16T00:00:00+00:00'
+[2025-01-27T15:25:35.323+0000] {python.py:201} INFO - Done. Returned value was: None
+[2025-01-27T15:25:35.332+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=insert_date, task_id=md_exchange_rate_d, execution_date=20250116T000000, start_date=20250127T152533, end_date=20250127T152535
+[2025-01-27T15:25:35.336+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T15:25:35.492+0000] {sql.py:450} INFO - Running statement: 
+        INSERT INTO log.logt (execution_datetime, event_datetime, event_name)
+        VALUES ('2025-01-16 00:00:00', '2025-01-27T15:25:35.332969', 'md_exchange_rate_d');
+    , parameters: None
+[2025-01-27T15:25:35.495+0000] {sql.py:459} INFO - Rows affected: 1
+[2025-01-27T15:25:35.549+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-27T15:25:35.581+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
