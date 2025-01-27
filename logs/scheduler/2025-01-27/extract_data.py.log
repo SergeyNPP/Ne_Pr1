@@ -1294,3 +1294,35 @@ NameError: name 'uploading_logs' is not defined
 [2025-01-27T18:22:38.526+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:22:38.526+0000] {dag.py:3036} INFO - Sync 1 DAGs
 [2025-01-27T18:22:38.539+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:22:38.539+0000] {dag.py:3823} INFO - Setting next_dagrun for extract_date to 2025-01-28 00:00:00+00:00, run_after=2025-01-29 00:00:00+00:00
 [2025-01-27T18:22:38.556+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/extract_data.py took 0.420 seconds
+[2025-01-27T18:23:08.931+0000] {processor.py:161} INFO - Started process (PID=3190) to work on /opt/airflow/dags/extract_data.py
+[2025-01-27T18:23:08.933+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/extract_data.py for tasks to queue
+[2025-01-27T18:23:08.934+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:08.934+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:23:09.262+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:09.262+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T18:23:09.268+0000] {processor.py:840} INFO - DAG(s) 'extract_date' retrieved from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:23:09.338+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:09.338+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-01-27T18:23:09.352+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:09.352+0000] {dag.py:3823} INFO - Setting next_dagrun for extract_date to 2025-01-28 00:00:00+00:00, run_after=2025-01-29 00:00:00+00:00
+[2025-01-27T18:23:09.384+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/extract_data.py took 0.456 seconds
+[2025-01-27T18:23:39.818+0000] {processor.py:161} INFO - Started process (PID=3205) to work on /opt/airflow/dags/extract_data.py
+[2025-01-27T18:23:39.819+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/extract_data.py for tasks to queue
+[2025-01-27T18:23:39.820+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:39.820+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:23:40.158+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:40.158+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T18:23:40.164+0000] {processor.py:840} INFO - DAG(s) 'extract_date' retrieved from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:23:40.253+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:40.252+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-01-27T18:23:40.269+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:23:40.268+0000] {dag.py:3823} INFO - Setting next_dagrun for extract_date to 2025-01-28 00:00:00+00:00, run_after=2025-01-29 00:00:00+00:00
+[2025-01-27T18:23:40.287+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/extract_data.py took 0.473 seconds
+[2025-01-27T18:24:10.617+0000] {processor.py:161} INFO - Started process (PID=3215) to work on /opt/airflow/dags/extract_data.py
+[2025-01-27T18:24:10.618+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/extract_data.py for tasks to queue
+[2025-01-27T18:24:10.619+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:10.619+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:24:10.981+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:10.980+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T18:24:10.988+0000] {processor.py:840} INFO - DAG(s) 'extract_date' retrieved from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:24:11.065+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:11.064+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-01-27T18:24:11.077+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:11.077+0000] {dag.py:3823} INFO - Setting next_dagrun for extract_date to 2025-01-28 00:00:00+00:00, run_after=2025-01-29 00:00:00+00:00
+[2025-01-27T18:24:11.109+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/extract_data.py took 0.494 seconds
+[2025-01-27T18:24:41.417+0000] {processor.py:161} INFO - Started process (PID=3225) to work on /opt/airflow/dags/extract_data.py
+[2025-01-27T18:24:41.418+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/extract_data.py for tasks to queue
+[2025-01-27T18:24:41.419+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:41.418+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:24:41.712+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:41.711+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T18:24:41.718+0000] {processor.py:840} INFO - DAG(s) 'extract_date' retrieved from /opt/airflow/dags/extract_data.py
+[2025-01-27T18:24:41.786+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:41.786+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2025-01-27T18:24:41.803+0000] {logging_mixin.py:188} INFO - [2025-01-27T18:24:41.802+0000] {dag.py:3823} INFO - Setting next_dagrun for extract_date to 2025-01-28 00:00:00+00:00, run_after=2025-01-29 00:00:00+00:00
+[2025-01-27T18:24:41.831+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/extract_data.py took 0.417 seconds
