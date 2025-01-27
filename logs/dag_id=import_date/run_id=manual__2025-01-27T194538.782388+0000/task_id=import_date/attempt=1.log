@@ -1,0 +1,22 @@
+[2025-01-27T19:45:40.951+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: import_date.import_date manual__2025-01-27T19:45:38.782388+00:00 [queued]>
+[2025-01-27T19:45:40.963+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: import_date.import_date manual__2025-01-27T19:45:38.782388+00:00 [queued]>
+[2025-01-27T19:45:40.964+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T19:45:40.982+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): import_date> on 2025-01-27 19:45:38.782388+00:00
+[2025-01-27T19:45:40.989+0000] {standard_task_runner.py:60} INFO - Started process 782 to run task
+[2025-01-27T19:45:40.993+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'import_date', 'import_date', 'manual__2025-01-27T19:45:38.782388+00:00', '--job-id', '3277', '--raw', '--subdir', 'DAGS_FOLDER/import_date.py', '--cfg-path', '/tmp/tmpaba19k3o']
+[2025-01-27T19:45:41.137+0000] {standard_task_runner.py:88} INFO - Job 3277: Subtask import_date
+[2025-01-27T19:45:41.187+0000] {task_command.py:423} INFO - Running <TaskInstance: import_date.import_date manual__2025-01-27T19:45:38.782388+00:00 [running]> on host 711845a6becd
+[2025-01-27T19:45:41.254+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='import_date' AIRFLOW_CTX_TASK_ID='import_date' AIRFLOW_CTX_EXECUTION_DATE='2025-01-27T19:45:38.782388+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-27T19:45:38.782388+00:00'
+[2025-01-27T19:45:41.256+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+TypeError: import_() missing 1 required positional argument: 'dm_f101_round_f'
+[2025-01-27T19:45:41.265+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=import_date, task_id=import_date, execution_date=20250127T194538, start_date=20250127T194540, end_date=20250127T194541
+[2025-01-27T19:45:41.275+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 3277 for task import_date (import_() missing 1 required positional argument: 'dm_f101_round_f'; 782)
+[2025-01-27T19:45:41.289+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-27T19:45:41.434+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

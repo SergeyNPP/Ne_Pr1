@@ -1,0 +1,160 @@
+[2025-01-27T20:28:49.499+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T20:28:45.031552+00:00 [queued]>
+[2025-01-27T20:28:49.506+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T20:28:45.031552+00:00 [queued]>
+[2025-01-27T20:28:49.507+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T20:28:49.622+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_dm_f101_round_f> on 2025-01-27 20:28:45.031552+00:00
+[2025-01-27T20:28:49.628+0000] {standard_task_runner.py:60} INFO - Started process 1583 to run task
+[2025-01-27T20:28:49.630+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'import_date', 'sql_dm_f101_round_f', 'manual__2025-01-27T20:28:45.031552+00:00', '--job-id', '3326', '--raw', '--subdir', 'DAGS_FOLDER/import_date.py', '--cfg-path', '/tmp/tmp7_k35yyf']
+[2025-01-27T20:28:49.633+0000] {standard_task_runner.py:88} INFO - Job 3326: Subtask sql_dm_f101_round_f
+[2025-01-27T20:28:49.672+0000] {task_command.py:423} INFO - Running <TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T20:28:45.031552+00:00 [running]> on host 711845a6becd
+[2025-01-27T20:28:49.743+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='import_date' AIRFLOW_CTX_TASK_ID='sql_dm_f101_round_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-27T20:28:45.031552+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-27T20:28:45.031552+00:00'
+[2025-01-27T20:28:49.744+0000] {sql.py:276} INFO - Executing: INSERT INTO ds.dm_f101_round_f(
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+)
+SELECT 
+  to_date(from_date, '%Y-%m-%d') as from_date,
+  to_date(to_date, '%Y-%m-%d') as to_date,
+  chapter::varchar(1) as chapter,
+  ledger_account::varchar(5) as ledger_account,
+  characteristic::varchar(1) as characteristic,
+  to_number(to_balance_in_rub, '99999999999999999999999999999999,9') as to_balance_in_rub,
+  r_balance_in_rub,
+  to_number(balance_in_val, '99999999999999999999999999999999,9') as balance_in_val,
+  r_balance_in_val,
+  to_number(balance_in_total, '99999999999999999999999999999999,9') as balance_in_total,
+  r_balance_in_total,
+  to_number(turn_deb_rub, '99999999999999999999999999999999,9') as turn_deb_rub,
+  r_turn_deb_rub,
+  to_number(turn_deb_val, '99999999999999999999999999999999,9') as turn_deb_val,
+  r_turn_deb_val,
+  to_number(turn_deb_total, '99999999999999999999999999999999,9') as turn_deb_total,
+  r_turn_deb_total,
+  to_number(turn_cre_rub, '99999999999999999999999999999999,9') as turn_cre_rub,
+  r_turn_cre_rub,
+  to_number(turn_cre_val, '99999999999999999999999999999999,9') as turn_cre_val,
+  r_turn_cre_val,
+  to_number(turn_cre_total, '99999999999999999999999999999999,9') as turn_cre_total,
+  r_turn_cre_total,
+  to_number(balance_out_rub, '99999999999999999999999999999999,9') as balance_out_rub,
+  r_balance_out_rub,
+  to_number(balance_out_val, '99999999999999999999999999999999,9') as balance_out_val,
+  r_balance_out_val,
+  to_number(balance_out_total, '99999999999999999999999999999999,9') as balance_out_total,
+  r_balance_out_total
+FROM stage.dm_f101_round_f;
+
+[2025-01-27T20:28:49.753+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T20:28:49.762+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T20:28:49.802+0000] {sql.py:450} INFO - Running statement: INSERT INTO ds.dm_f101_round_f(
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+)
+SELECT 
+  to_date(from_date, '%Y-%m-%d') as from_date,
+  to_date(to_date, '%Y-%m-%d') as to_date,
+  chapter::varchar(1) as chapter,
+  ledger_account::varchar(5) as ledger_account,
+  characteristic::varchar(1) as characteristic,
+  to_number(to_balance_in_rub, '99999999999999999999999999999999,9') as to_balance_in_rub,
+  r_balance_in_rub,
+  to_number(balance_in_val, '99999999999999999999999999999999,9') as balance_in_val,
+  r_balance_in_val,
+  to_number(balance_in_total, '99999999999999999999999999999999,9') as balance_in_total,
+  r_balance_in_total,
+  to_number(turn_deb_rub, '99999999999999999999999999999999,9') as turn_deb_rub,
+  r_turn_deb_rub,
+  to_number(turn_deb_val, '99999999999999999999999999999999,9') as turn_deb_val,
+  r_turn_deb_val,
+  to_number(turn_deb_total, '99999999999999999999999999999999,9') as turn_deb_total,
+  r_turn_deb_total,
+  to_number(turn_cre_rub, '99999999999999999999999999999999,9') as turn_cre_rub,
+  r_turn_cre_rub,
+  to_number(turn_cre_val, '99999999999999999999999999999999,9') as turn_cre_val,
+  r_turn_cre_val,
+  to_number(turn_cre_total, '99999999999999999999999999999999,9') as turn_cre_total,
+  r_turn_cre_total,
+  to_number(balance_out_rub, '99999999999999999999999999999999,9') as balance_out_rub,
+  r_balance_out_rub,
+  to_number(balance_out_val, '99999999999999999999999999999999,9') as balance_out_val,
+  r_balance_out_val,
+  to_number(balance_out_total, '99999999999999999999999999999999,9') as balance_out_total,
+  r_balance_out_total
+FROM stage.dm_f101_round_f;
+, parameters: None
+[2025-01-27T20:28:49.805+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedColumn: ОШИБКА:  столбец "to_balance_in_rub" не существует
+LINE 38:   to_number(to_balance_in_rub, '9999999999999999999999999999...
+                     ^
+HINT:  Возможно, предполагалась ссылка на столбец "dm_f101_round_f.r_balance_in_rub" или столбец "dm_f101_round_f.r_balance_in_rub".
+
+[2025-01-27T20:28:49.814+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=import_date, task_id=sql_dm_f101_round_f, execution_date=20250127T202845, start_date=20250127T202849, end_date=20250127T202849
+[2025-01-27T20:28:49.824+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 3326 for task sql_dm_f101_round_f (ОШИБКА:  столбец "to_balance_in_rub" не существует
+LINE 38:   to_number(to_balance_in_rub, '9999999999999999999999999999...
+                     ^
+HINT:  Возможно, предполагалась ссылка на столбец "dm_f101_round_f.r_balance_in_rub" или столбец "dm_f101_round_f.r_balance_in_rub".
+; 1583)
+[2025-01-27T20:28:49.844+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-27T20:28:49.863+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

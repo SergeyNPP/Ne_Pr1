@@ -1,0 +1,17 @@
+[2025-01-27T19:42:12.808+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: import_date.start manual__2025-01-27T19:42:11.748664+00:00 [queued]>
+[2025-01-27T19:42:12.818+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: import_date.start manual__2025-01-27T19:42:11.748664+00:00 [queued]>
+[2025-01-27T19:42:12.819+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T19:42:12.832+0000] {taskinstance.py:2191} INFO - Executing <Task(EmptyOperator): start> on 2025-01-27 19:42:11.748664+00:00
+[2025-01-27T19:42:12.838+0000] {standard_task_runner.py:60} INFO - Started process 707 to run task
+[2025-01-27T19:42:12.841+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'import_date', 'start', 'manual__2025-01-27T19:42:11.748664+00:00', '--job-id', '3270', '--raw', '--subdir', 'DAGS_FOLDER/import_date.py', '--cfg-path', '/tmp/tmpzn0hlx44']
+[2025-01-27T19:42:12.975+0000] {standard_task_runner.py:88} INFO - Job 3270: Subtask start
+[2025-01-27T19:42:13.010+0000] {task_command.py:423} INFO - Running <TaskInstance: import_date.start manual__2025-01-27T19:42:11.748664+00:00 [running]> on host 711845a6becd
+[2025-01-27T19:42:13.068+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='import_date' AIRFLOW_CTX_TASK_ID='start' AIRFLOW_CTX_EXECUTION_DATE='2025-01-27T19:42:11.748664+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-27T19:42:11.748664+00:00'
+[2025-01-27T19:42:13.076+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=import_date, task_id=start, execution_date=20250127T194211, start_date=20250127T194212, end_date=20250127T194213
+[2025-01-27T19:42:13.077+0000] {taskinstance.py:1116} ERROR - Error when executing uploading_logs callback
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 1113, in _run_finished_callback
+    callback(context)
+TypeError: uploading_logs() takes 0 positional arguments but 1 was given
+[2025-01-27T19:42:13.094+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-01-27T19:42:13.237+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

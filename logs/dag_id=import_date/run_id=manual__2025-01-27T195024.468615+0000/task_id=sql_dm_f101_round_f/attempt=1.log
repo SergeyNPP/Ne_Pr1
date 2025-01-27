@@ -1,0 +1,160 @@
+[2025-01-27T19:50:29.329+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:50:24.468615+00:00 [queued]>
+[2025-01-27T19:50:29.338+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:50:24.468615+00:00 [queued]>
+[2025-01-27T19:50:29.339+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T19:50:29.468+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_dm_f101_round_f> on 2025-01-27 19:50:24.468615+00:00
+[2025-01-27T19:50:29.473+0000] {standard_task_runner.py:60} INFO - Started process 894 to run task
+[2025-01-27T19:50:29.477+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'import_date', 'sql_dm_f101_round_f', 'manual__2025-01-27T19:50:24.468615+00:00', '--job-id', '3290', '--raw', '--subdir', 'DAGS_FOLDER/import_date.py', '--cfg-path', '/tmp/tmp39jtk4ba']
+[2025-01-27T19:50:29.479+0000] {standard_task_runner.py:88} INFO - Job 3290: Subtask sql_dm_f101_round_f
+[2025-01-27T19:50:29.522+0000] {task_command.py:423} INFO - Running <TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:50:24.468615+00:00 [running]> on host 711845a6becd
+[2025-01-27T19:50:29.587+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='import_date' AIRFLOW_CTX_TASK_ID='sql_dm_f101_round_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-27T19:50:24.468615+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-27T19:50:24.468615+00:00'
+[2025-01-27T19:50:29.588+0000] {sql.py:276} INFO - Executing: INSERT INTO ds.dm_f101_round_f(
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+)
+SELECT 
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+FROM stage.dm_f101_round_f;
+
+[2025-01-27T19:50:29.595+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T19:50:29.603+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T19:50:29.644+0000] {sql.py:450} INFO - Running statement: INSERT INTO ds.dm_f101_round_f(
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+)
+SELECT 
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+FROM stage.dm_f101_round_f;
+, parameters: None
+[2025-01-27T19:50:29.649+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.DatatypeMismatch: ОШИБКА:  столбец "from_date" имеет тип date, а выражение - text
+LINE 33:   from_date
+           ^
+HINT:  Перепишите выражение или преобразуйте его тип.
+
+[2025-01-27T19:50:29.657+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=import_date, task_id=sql_dm_f101_round_f, execution_date=20250127T195024, start_date=20250127T195029, end_date=20250127T195029
+[2025-01-27T19:50:29.668+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 3290 for task sql_dm_f101_round_f (ОШИБКА:  столбец "from_date" имеет тип date, а выражение - text
+LINE 33:   from_date
+           ^
+HINT:  Перепишите выражение или преобразуйте его тип.
+; 894)
+[2025-01-27T19:50:29.690+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-27T19:50:29.709+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -11,7 +11,7 @@ SELECT distinct
       to_date(mad."DATA_ACTUAL_DATE", '%Y-%m-%d') 
     , to_date(mad."DATA_ACTUAL_END_DATE", '%Y-%m-%d')
     , mad."ACCOUNT_RK"
-    , SUBSTRING(mad."ACCOUNT_NUMBER", 3)::BIGINT
+    , to_number(mad."ACCOUNT_NUMBER", '999999999999999999999')::BIGINT
 	, mad."CHAR_TYPE"
 	, mad."CURRENCY_RK"
 	, mad."CURRENCY_CODE"

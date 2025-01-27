@@ -1,0 +1,158 @@
+[2025-01-27T19:09:18.574+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:09:17.217067+00:00 [queued]>
+[2025-01-27T19:09:18.581+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:09:17.217067+00:00 [queued]>
+[2025-01-27T19:09:18.582+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2025-01-27T19:09:18.594+0000] {taskinstance.py:2191} INFO - Executing <Task(SQLExecuteQueryOperator): sql_dm_f101_round_f> on 2025-01-27 19:09:17.217067+00:00
+[2025-01-27T19:09:18.600+0000] {standard_task_runner.py:60} INFO - Started process 123 to run task
+[2025-01-27T19:09:18.604+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'import_date', 'sql_dm_f101_round_f', 'manual__2025-01-27T19:09:17.217067+00:00', '--job-id', '3237', '--raw', '--subdir', 'DAGS_FOLDER/import_date.py', '--cfg-path', '/tmp/tmpn1ffn6ve']
+[2025-01-27T19:09:18.762+0000] {standard_task_runner.py:88} INFO - Job 3237: Subtask sql_dm_f101_round_f
+[2025-01-27T19:09:18.800+0000] {task_command.py:423} INFO - Running <TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:09:17.217067+00:00 [running]> on host 711845a6becd
+[2025-01-27T19:09:18.869+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='budanovsa' AIRFLOW_CTX_DAG_ID='import_date' AIRFLOW_CTX_TASK_ID='sql_dm_f101_round_f' AIRFLOW_CTX_EXECUTION_DATE='2025-01-27T19:09:17.217067+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-27T19:09:17.217067+00:00'
+[2025-01-27T19:09:18.870+0000] {sql.py:276} INFO - Executing: INSERT INTO ds.dm_f101_round_f(
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+)
+SELECT 
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+FROM stage.dm_f101_round_f;
+
+[2025-01-27T19:09:18.877+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T19:09:18.883+0000] {base.py:83} INFO - Using connection ID 'postgres-db' for task execution.
+[2025-01-27T19:09:18.933+0000] {sql.py:450} INFO - Running statement: INSERT INTO ds.dm_f101_round_f(
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+)
+SELECT 
+  from_date
+  ,to_date 
+  ,chapter
+  ,ledger_account
+  ,characteristic
+  ,balance_in_rub
+  ,r_balance_in_rub
+  ,balance_in_val
+  ,r_balance_in_val
+  ,balance_in_total
+  ,r_balance_in_total
+  ,turn_deb_rub
+  ,r_turn_deb_rub
+  ,turn_deb_val
+  ,r_turn_deb_val
+  ,turn_deb_total
+  ,r_turn_deb_total
+  ,turn_cre_rub
+  ,r_turn_cre_rub
+  ,turn_cre_val
+  ,r_turn_cre_val
+  ,turn_cre_total
+  ,r_turn_cre_total
+  ,balance_out_rub
+  ,r_balance_out_rub
+  ,balance_out_val
+  ,r_balance_out_val
+  ,balance_out_total
+  ,r_balance_out_total
+FROM stage.dm_f101_round_f;
+, parameters: None
+[2025-01-27T19:09:18.938+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: ОШИБКА:  отношение "stage.dm_f101_round_f" не существует
+LINE 62: FROM stage.dm_f101_round_f;
+              ^
+
+[2025-01-27T19:09:18.947+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=import_date, task_id=sql_dm_f101_round_f, execution_date=20250127T190917, start_date=20250127T190918, end_date=20250127T190918
+[2025-01-27T19:09:18.961+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 3237 for task sql_dm_f101_round_f (ОШИБКА:  отношение "stage.dm_f101_round_f" не существует
+LINE 62: FROM stage.dm_f101_round_f;
+              ^
+; 123)
+[2025-01-27T19:09:18.980+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-01-27T19:09:19.130+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

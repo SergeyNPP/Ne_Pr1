@@ -1,0 +1,1 @@
+[2025-01-27T19:11:08.846+0000] {scheduler_job_runner.py:781} ERROR - Executor reports task instance <TaskInstance: import_date.sql_dm_f101_round_f manual__2025-01-27T19:11:06.679872+00:00 [queued]> finished (success) although the task says it's queued. (Info: None) Was the task killed externally?
