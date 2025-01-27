@@ -47768,3 +47768,51 @@ File Path                          PID    Runtime      # DAGs    # Errors  Last 
 /opt/airflow/dags/extract_data.py                           1           0  0.44s           2025-01-27T18:24:41
 /opt/airflow/dags/insert_data.py                            1           0  0.49s           2025-01-27T18:24:52
 ================================================================================
+[2025-01-27T18:25:35.839+0000] {manager.py:879} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                          PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/extract_data.py                           1           0  0.48s           2025-01-27T18:25:12
+/opt/airflow/dags/insert_data.py                            1           0  0.49s           2025-01-27T18:25:23
+================================================================================
+[2025-01-27T18:25:45.398+0000] {manager.py:738} INFO - Searching for files in /opt/airflow/dags
+[2025-01-27T18:25:45.468+0000] {manager.py:741} INFO - There are 2 files in /opt/airflow/dags
+[2025-01-27T18:26:06.267+0000] {manager.py:879} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                          PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/extract_data.py                           1           0  0.49s           2025-01-27T18:25:43
+/opt/airflow/dags/insert_data.py                            1           0  0.55s           2025-01-27T18:25:54
+================================================================================
+[2025-01-27T18:26:36.509+0000] {manager.py:879} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                          PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/extract_data.py                           1           0  0.46s           2025-01-27T18:26:14
+/opt/airflow/dags/insert_data.py                            1           0  0.49s           2025-01-27T18:26:24
+================================================================================
+[2025-01-27T18:27:06.737+0000] {manager.py:879} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                          PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/extract_data.py                           1           0  0.47s           2025-01-27T18:26:45
+/opt/airflow/dags/insert_data.py                            1           0  0.47s           2025-01-27T18:26:55
+================================================================================
+[2025-01-27T18:27:37.083+0000] {manager.py:879} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                          PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/extract_data.py                           1           0  0.50s           2025-01-27T18:27:15
+/opt/airflow/dags/insert_data.py                            1           0  0.50s           2025-01-27T18:27:26
+================================================================================
+[2025-01-27T18:27:43.353+0000] {manager.py:451} INFO - Exiting gracefully upon receiving signal 15
