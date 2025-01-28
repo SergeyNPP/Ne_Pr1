@@ -1,4 +1,5 @@
-INSERT INTO ds.dm_f101_round_f(
+truncate dm.dm_f101_round_f_v2;
+INSERT INTO dm.dm_f101_round_f_v2(
   from_date
   ,to_date 
   ,chapter
@@ -29,7 +30,7 @@ INSERT INTO ds.dm_f101_round_f(
   ,balance_out_total
   ,r_balance_out_total
 )
-SELECT 
+SELECT distinct
   to_date(f.from_date, '%Y-%m-%d') as from_date,
   f.to_date::date as to_date,
   chapter::varchar(1) as chapter,
