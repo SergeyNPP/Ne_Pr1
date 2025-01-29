@@ -1,8 +1,9 @@
-// {
-//     "workbench.colorCustomizations": {
-//       "editorError.foreground": "#00000000",
-//       "editorWarning.foreground": "#00000000",
-//       "EditorInfo.foreground": "#00000000"
-//     }
-//   }
+{
+    "workbench.colorCustomizations": {
+    "editorError.foreground": "#00000000",
+    "editorWarning.foreground": "#00000000",
+    "EditorInfo.foreground": "#00000000",
+    "files.autoGuessEncoding": true
+    }
+  }
   

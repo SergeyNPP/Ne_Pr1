@@ -1,0 +1,2 @@
+\i /path/to/yourfile.sql
+psql -U your_username (postgres) -d database_name (postgres) \i /D:/2_1/DATABASE_DUMP.sql

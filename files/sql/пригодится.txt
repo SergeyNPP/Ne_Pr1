@@ -1,0 +1,14 @@
+
+--Обработка таблицы без ключевых полей для удаления дубликатов:
+DELETE FROM table_name t1
+WHERE EXISTS (
+  SELECT 1
+  FROM table_name t2
+  WHERE t2.unique_column = t1.unique_column
+  AND t2.id < t1.id
+);
+
+-- Добавление ключевых полей после создания таблицы
+ALTER TABLE table_name ADD COLUMN id SERIAL PRIMARY KEY;
+
+«Честное» время clock_timestamp
